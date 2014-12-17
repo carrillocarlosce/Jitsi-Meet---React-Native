@@ -13,6 +13,13 @@ function calculatePacketLoss(lostPackets, totalPackets) {
     return Math.round((lostPackets/totalPackets)*100);
 }
 
+function getStatValue(item, name) {
+    if(!keyMap[RTC.browser][name])
+        throw "The property isn't supported!";
+    var key = keyMap[RTC.browser][name];
+    return RTC.browser == "chrome"? item.stat(key) : item[key];
+}
+
 /**
  * Peer statistics data holder.
  * @constructor
@@ -124,9 +131,7 @@ PeerStats.transport = [];
  * called on stats update.
  * @constructor
  */
-function StatsCollector(peerconnection, audioLevelsInterval,
-                        audioLevelsUpdateCallback, statsInterval,
-                        statsUpdateCallback)
+function StatsCollector(peerconnection, audioLevelsInterval, statsInterval, eventEmitter)
 {
     this.peerconnection = peerconnection;
     this.baselineAudioLevelsReport = null;
@@ -134,6 +139,7 @@ function StatsCollector(peerconnection, audioLevelsInterval,
     this.currentStatsReport = null;
     this.baselineStatsReport = null;
     this.audioLevelsIntervalId = null;
+    this.eventEmitter = eventEmitter;
 
     /**
      * Gather PeerConnection stats once every this many milliseconds.
@@ -161,8 +167,8 @@ function StatsCollector(peerconnection, audioLevelsInterval,
      */
     this.statsToBeLogged =
     {
-      timestamps: [],
-      stats: {}
+        timestamps: [],
+        stats: {}
     };
 
     // Updates stats interval
@@ -172,10 +178,9 @@ function StatsCollector(peerconnection, audioLevelsInterval,
     this.statsIntervalMilis = statsInterval;
     // Map of jids to PeerStats
     this.jid2stats = {};
-
-    this.audioLevelsUpdateCallback = audioLevelsUpdateCallback;
-    this.statsUpdateCallback = statsUpdateCallback;
 }
+
+module.exports = StatsCollector;
 
 /**
  * Stops stats updates.
@@ -339,7 +344,7 @@ StatsCollector.prototype.logStats = function () {
     // XEP-0337-ish
     var message = $msg({to: focusMucJid, type: 'normal'});
     message.c('log', { xmlns: 'urn:xmpp:eventlog',
-                       id: 'PeerConnectionStats'});
+        id: 'PeerConnectionStats'});
     message.c('message').t(content).up();
     if (deflate) {
         message.c('tag', {name: "deflated", value: "true"}).up();
@@ -616,13 +621,13 @@ StatsCollector.prototype.processStatsReport = function () {
     PeerStats.packetLoss = {
         total:
             calculatePacketLoss(lostPackets.download + lostPackets.upload,
-                totalPackets.download + totalPackets.upload),
+                    totalPackets.download + totalPackets.upload),
         download:
             calculatePacketLoss(lostPackets.download, totalPackets.download),
         upload:
             calculatePacketLoss(lostPackets.upload, totalPackets.upload)
     };
-    this.statsUpdateCallback(
+    this.eventEmitter.emit("statistics.connectionstats",
         {
             "bitrate": PeerStats.bitrate,
             "packetLoss": PeerStats.packetLoss,
@@ -696,17 +701,10 @@ StatsCollector.prototype.processAudioLevelReport = function ()
             audioLevel = audioLevel / 32767;
             jidStats.setSsrcAudioLevel(ssrc, audioLevel);
             if(jid != connection.emuc.myroomjid)
-                this.audioLevelsUpdateCallback(jid, audioLevel);
+                this.eventEmitter.emit("statistics.audioLevel", jid, audioLevel);
         }
 
     }
 
 
 };
-
-function getStatValue(item, name) {
-    if(!keyMap[RTC.browser][name])
-        throw "The property isn't supported!";
-    var key = keyMap[RTC.browser][name];
-    return RTC.browser == "chrome"? item.stat(key) : item[key];
-}
