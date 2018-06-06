@@ -41,7 +41,7 @@ dependencies {
 //
 
 void runBefore(String dependentTaskName, Task task) {
-    Task dependentTask = tasks.findByPath(dependentTaskName);
+    Task dependentTask = tasks.findByPath(dependentTaskName)
     if (dependentTask != null) {
         dependentTask.dependsOn task
     }

@@ -168,10 +168,11 @@ var config = {
     // Recording
 
     // Whether to enable recording or not.
-    // enableRecording: false,
+    enableRecording: true,
 
     // Type for recording: one of jibri or jirecon.
-    // recordingType: 'jibri',
+    recordingType: 'jibri',
+    hiddenDomain: 'recorder.yourdomain.com',
 
     // Misc
 

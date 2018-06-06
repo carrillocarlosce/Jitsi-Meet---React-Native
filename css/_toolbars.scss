@@ -284,7 +284,7 @@
     padding: 16px 8px;
     position: absolute;
     transition: bottom .3s ease-in;
-    width: 100%;
+    width: 50%;
     z-index: $toolbarZ;
 
     &.visible {
@@ -324,7 +324,7 @@
         font-size: inherit;
         height: 100%;
         line-height: inherit;
-        width: 100%;
+        width: 50%;
     }
 
     i:hover {
@@ -362,7 +362,7 @@
 
         .overflow-menu-item {
             align-items: center;
-            color: #B8C7E0;
+            color: #FFFAF0;
             cursor: pointer;
             display: flex;
             font-size: 14px;

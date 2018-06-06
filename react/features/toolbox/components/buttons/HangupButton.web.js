@@ -46,7 +46,7 @@ export class HangupButton extends AbstractHangupButton {
          * Where the tooltip should display, relative to the button.
          */
         tooltipPosition: PropTypes.string
-    }
+    };
 
     /**
      * Implements React's {@link Component#render()}.

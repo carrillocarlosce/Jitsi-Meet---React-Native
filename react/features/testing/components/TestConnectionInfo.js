@@ -81,7 +81,7 @@ type State = {
  */
 class TestConnectionInfo extends Component<Props, State> {
 
-    _onStatsUpdated: Object => void
+    _onStatsUpdated: Object => void;
 
     /**
      * Initializes new <tt>TestConnectionInfo</tt> instance.

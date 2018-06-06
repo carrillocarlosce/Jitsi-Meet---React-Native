@@ -46,7 +46,7 @@ export function makeAspectRatioAware(
                 ASPECT_RATIO_NARROW,
                 ASPECT_RATIO_WIDE
             ])
-        }
+        };
 
         /**
          * Implement's React render method to wrap the nested component.

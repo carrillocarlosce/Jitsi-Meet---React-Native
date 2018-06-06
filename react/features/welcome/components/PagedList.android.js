@@ -144,7 +144,7 @@ export default class PagedList extends AbstractPagedList {
         }
     }
 
-    _onSelectPage: number => Function
+    _onSelectPage: number => Function;
 
     /**
      * Constructs a function to be used as a callback for the tab bar.
@@ -163,7 +163,7 @@ export default class PagedList extends AbstractPagedList {
         };
     }
 
-    _setPagerReference: Object => void
+    _setPagerReference: Object => void;
 
     /**
      * Sets the pager's reference for direct modification.

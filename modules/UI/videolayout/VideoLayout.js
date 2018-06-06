@@ -880,8 +880,7 @@ const VideoLayout = {
 
         // Resize the video area element.
         $('#videospace').animate({
-            right: window.innerWidth - availableWidth,
-            width: availableWidth,
+            right: '5%',
             height: availableHeight
         }, {
             queue: false,

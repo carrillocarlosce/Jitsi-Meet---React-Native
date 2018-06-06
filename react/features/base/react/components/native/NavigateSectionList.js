@@ -133,7 +133,7 @@ class NavigateSectionList extends Component<Props> {
         };
     }
 
-    _getAvatarColor: string => Object
+    _getAvatarColor: string => Object;
 
     /**
      * Returns a style (color) based on the string that determines the
@@ -171,7 +171,7 @@ class NavigateSectionList extends Component<Props> {
         return `${index}-${item.key}`;
     }
 
-    _onPress: string => Function
+    _onPress: string => Function;
 
     /**
      * Returns a function that is used in the onPress callback of the items.
@@ -188,7 +188,7 @@ class NavigateSectionList extends Component<Props> {
         };
     }
 
-    _onRefresh: () => void
+    _onRefresh: () => void;
 
     /**
      * Invokes the onRefresh callback if present.
@@ -294,7 +294,7 @@ class NavigateSectionList extends Component<Props> {
         return null;
     }
 
-    _renderListEmptyComponent: () => Object
+    _renderListEmptyComponent: () => Object;
 
     /**
      * Renders a component to display when the list is empty.
@@ -322,7 +322,7 @@ class NavigateSectionList extends Component<Props> {
         return null;
     }
 
-    _renderSection: Object => Object
+    _renderSection: Object => Object;
 
     /**
      * Renders a section title.

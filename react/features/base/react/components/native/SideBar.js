@@ -128,7 +128,7 @@ export default class SideBar extends Component<Props, State> {
         );
     }
 
-    _getContainerStyle: () => Array<Object>
+    _getContainerStyle: () => Array<Object>;
 
     /**
      * Assembles a style array for the container.

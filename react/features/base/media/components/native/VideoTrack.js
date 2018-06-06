@@ -16,7 +16,7 @@ class VideoTrack extends AbstractVideoTrack {
      *
      * @static
      */
-    static propTypes = AbstractVideoTrack.propTypes
+    static propTypes = AbstractVideoTrack.propTypes;
 
     /**
      * Initializes a new VideoTrack instance.

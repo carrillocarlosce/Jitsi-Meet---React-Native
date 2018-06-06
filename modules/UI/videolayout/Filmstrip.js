@@ -199,6 +199,7 @@ const Filmstrip = {
      */
     setFilmstripOnly() {
         this.filmstrip.addClass('filmstrip__videos-filmstripOnly');
+        this.filmstrip.css({ 'right': '50%' });
     },
 
     /**

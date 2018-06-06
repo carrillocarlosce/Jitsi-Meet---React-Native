@@ -16,11 +16,11 @@ var interfaceConfig = {
     DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Jitster',
     DEFAULT_LOCAL_DISPLAY_NAME: 'me',
     SHOW_JITSI_WATERMARK: true,
-    JITSI_WATERMARK_LINK: 'https://jitsi.org',
+    JITSI_WATERMARK_LINK: 'http://www.m-healthsolutions.com/',
 
     // if watermark is disabled by default, it can be shown only for guests
     SHOW_WATERMARK_FOR_GUESTS: true,
-    SHOW_BRAND_WATERMARK: false,
+    SHOW_BRAND_WATERMARK: true,
     BRAND_WATERMARK_LINK: '',
     SHOW_POWERED_BY: false,
     GENERATE_ROOMNAMES_ON_WELCOME_PAGE: true,
@@ -41,10 +41,10 @@ var interfaceConfig = {
     TOOLBAR_BUTTONS: [
 
         // main toolbar
-        'microphone', 'camera', 'desktop', 'fullscreen', 'fodeviceselection', 'hangup',
+        'microphone', 'camera', 'desktop', 'fullscreen', 'fodeviceselection', 'hangup', 'recording',
 
         // extended toolbar
-        'profile', 'info', 'chat', 'recording', 'etherpad',
+        'profile', 'info', 'chat', 'etherpad',
         'sharedvideo', 'settings', 'raisehand', 'videoquality', 'filmstrip',
         'invite', 'feedback', 'stats', 'shortcuts'
     ],

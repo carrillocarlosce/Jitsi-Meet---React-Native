@@ -14,7 +14,7 @@ declare var interfaceConfig: Object;
  * @private
  */
 const _RIGHT_WATERMARK_STYLE = {
-    backgroundImage: 'url(images/rightwatermark.png)'
+    backgroundImage: 'url(images/mHealthSolutions.png)'
 };
 
 /**
@@ -111,7 +111,7 @@ class Watermarks extends Component<*, *> {
                     style = { _RIGHT_WATERMARK_STYLE } />
             );
 
-            const { brandWatermarkLink } = this.state;
+            const { brandWatermarkLink } = 'https://www.m-healthsolutions.com/';
 
             if (brandWatermarkLink) {
                 reactElement = ( // eslint-disable-line no-extra-parens
@@ -170,7 +170,7 @@ class Watermarks extends Component<*, *> {
             return (
                 <a
                     className = 'poweredby'
-                    href = 'http://jitsi.org'
+                    href = 'https://www.m-healthsolutions.com/'
                     target = '_new'>
                     <span>{ t('poweredby') } jitsi.org</span>
                 </a>

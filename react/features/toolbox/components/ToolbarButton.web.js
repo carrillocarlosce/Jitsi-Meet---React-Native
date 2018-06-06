@@ -37,7 +37,7 @@ class ToolbarButton extends AbstractToolbarButton {
          * button.
          */
         tooltipPosition: PropTypes.string
-    }
+    };
 
     /**
      * Renders the button of this {@code ToolbarButton}.

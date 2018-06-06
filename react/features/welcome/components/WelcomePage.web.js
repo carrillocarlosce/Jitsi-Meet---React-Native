@@ -121,6 +121,12 @@ class WelcomePage extends AbstractWelcomePage {
                         ? 'with-content' : 'without-content'}` }
                     id = 'new_welcome_page'>
                     <div className = 'header'>
+                        <br>
+                        </br>
+                        <img
+                            src='https://m-healthsolutions.com/wp-content/uploads/2018/05/m-health-solutions_logo_Transparent.png'
+                            id='pictureDoctor' width = "20%" heigth = "20%" >
+                        </img>
                         <div className = 'header-image' />
                         <Watermarks />
                         <div className = 'header-text'>

@@ -12,22 +12,7 @@ const _NOUN_ = [
  * @const
  */
 const _PLURALNOUN_ = [
-    'Aliens', 'Animals', 'Antelopes', 'Ants', 'Apes', 'Apples', 'Baboons',
-    'Bacteria', 'Badgers', 'Bananas', 'Bats', 'Bears', 'Birds', 'Bonobos',
-    'Brides', 'Bugs', 'Bulls', 'Butterflies', 'Cheetahs', 'Cherries', 'Chicken',
-    'Children', 'Chimps', 'Clowns', 'Cows', 'Creatures', 'Dinosaurs', 'Dogs',
-    'Dolphins', 'Donkeys', 'Dragons', 'Ducks', 'Dwarfs', 'Eagles', 'Elephants',
-    'Elves', 'Fathers', 'Fish', 'Flowers', 'Frogs', 'Fruit', 'Fungi',
-    'Galaxies', 'Geese', 'Goats', 'Gorillas', 'Hedgehogs', 'Hippos', 'Horses',
-    'Hunters', 'Insects', 'Kids', 'Knights', 'Lemons', 'Lemurs', 'Leopards',
-    'LifeForms', 'Lions', 'Lizards', 'Mice', 'Monkeys', 'Monsters', 'Mushrooms',
-    'Octopodes', 'Oranges', 'Orangutans', 'Organisms', 'Pants', 'Parrots',
-    'Penguins', 'People', 'Pigeons', 'Pigs', 'Pineapples', 'Plants', 'Potatoes',
-    'Priests', 'Rats', 'Reptiles', 'Reptilians', 'Rhinos', 'Seagulls', 'Sheep',
-    'Siblings', 'Snakes', 'Spaghetti', 'Spiders', 'Squid', 'Squirrels',
-    'Stars', 'Students', 'Teachers', 'Tigers', 'Tomatoes', 'Trees', 'Vampires',
-    'Vegetables', 'Viruses', 'Vulcans', 'Weasels', 'Werewolves', 'Whales',
-    'Witches', 'Wizards', 'Wolves', 'Workers', 'Worms', 'Zebras'
+    'Patients', 'Doctors', 'People', 'Surgeons', 'Professionals', 'Family'
 ];
 
 /*
@@ -45,23 +30,7 @@ const _PLACE_ = [
  * @const
  */
 const _VERB_ = [
-    'Abandon', 'Adapt', 'Advertise', 'Answer', 'Anticipate', 'Appreciate',
-    'Approach', 'Argue', 'Ask', 'Bite', 'Blossom', 'Blush', 'Breathe', 'Breed',
-    'Bribe', 'Burn', 'Calculate', 'Clean', 'Code', 'Communicate', 'Compute',
-    'Confess', 'Confiscate', 'Conjugate', 'Conjure', 'Consume', 'Contemplate',
-    'Crawl', 'Dance', 'Delegate', 'Devour', 'Develop', 'Differ', 'Discuss',
-    'Dissolve', 'Drink', 'Eat', 'Elaborate', 'Emancipate', 'Estimate', 'Expire',
-    'Extinguish', 'Extract', 'Facilitate', 'Fall', 'Feed', 'Finish', 'Floss',
-    'Fly', 'Follow', 'Fragment', 'Freeze', 'Gather', 'Glow', 'Grow', 'Hex',
-    'Hide', 'Hug', 'Hurry', 'Improve', 'Intersect', 'Investigate', 'Jinx',
-    'Joke', 'Jubilate', 'Kiss', 'Laugh', 'Manage', 'Meet', 'Merge', 'Move',
-    'Object', 'Observe', 'Offer', 'Paint', 'Participate', 'Party', 'Perform',
-    'Plan', 'Pursue', 'Pierce', 'Play', 'Postpone', 'Pray', 'Proclaim',
-    'Question', 'Read', 'Reckon', 'Rejoice', 'Represent', 'Resize', 'Rhyme',
-    'Scream', 'Search', 'Select', 'Share', 'Shoot', 'Shout', 'Signal', 'Sing',
-    'Skate', 'Sleep', 'Smile', 'Smoke', 'Solve', 'Spell', 'Steer', 'Stink',
-    'Substitute', 'Swim', 'Taste', 'Teach', 'Terminate', 'Think', 'Type',
-    'Unite', 'Vanish', 'Worship'
+    'Treated', 'Healed', 'Cared', 'Loved'
 ];
 
 /**

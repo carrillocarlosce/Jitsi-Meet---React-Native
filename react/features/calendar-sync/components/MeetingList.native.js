@@ -117,7 +117,7 @@ class MeetingList extends Component<Props> {
         );
     }
 
-    _getRenderListEmptyComponent: () => Object
+    _getRenderListEmptyComponent: () => Object;
 
     /**
      * Returns a list empty component if a custom one has to be rendered instead
@@ -149,7 +149,7 @@ class MeetingList extends Component<Props> {
         return null;
     }
 
-    _onPress: string => Function
+    _onPress: string => Function;
 
     /**
      * Handles the list's navigate action.
@@ -164,7 +164,7 @@ class MeetingList extends Component<Props> {
         dispatch(appNavigate(url));
     }
 
-    _onRefresh: () => void
+    _onRefresh: () => void;
 
     /**
      * Callback to execute when the list is doing a pull-to-refresh.
@@ -178,7 +178,7 @@ class MeetingList extends Component<Props> {
         dispatch(refreshCalendarEntryList(true));
     }
 
-    _toDisplayableItem: Object => Object
+    _toDisplayableItem: Object => Object;
 
     /**
      * Creates a displayable object from an event.
@@ -199,7 +199,7 @@ class MeetingList extends Component<Props> {
         };
     }
 
-    _toDisplayableList: () => Array<Object>
+    _toDisplayableList: () => Array<Object>;
 
     /**
      * Transforms the event list to a displayable list
@@ -254,7 +254,7 @@ class MeetingList extends Component<Props> {
         return sectionList;
     }
 
-    _toDateString: Object => string
+    _toDateString: Object => string;
 
     /**
      * Generates a date (interval) string for a given event.

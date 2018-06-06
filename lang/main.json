@@ -46,7 +46,7 @@
         "showSpeakerStats": "Show speaker stats"
     },
     "welcomepage":{
-        "appDescription": "Go ahead, video chat with the whole team. In fact, invite everyone you know. __app__ is a fully encrypted, 100% open source video conferencing solution that you can use all day, every day, for free — with no account needed.",
+        "appDescription": "Connecting Medical Professionals with Patients",
         "audioVideoSwitch": {
             "audio": "Voice",
             "video": "Video"
@@ -59,7 +59,7 @@
         "roomnameHint": "Enter the name or URL of the room you want to join. You may make a name up, just let the people you are meeting know it so that they enter the same name.",
         "sendFeedback": "Send feedback",
         "terms": "Terms",
-        "title": "More secure, more flexible, and completely free video conferencing"
+        "title": "m-Heath Solutions Video Conferencing"
     },
     "startupoverlay": {
         "policyText": " ",
@@ -282,7 +282,7 @@
         "tokenAuthFailed": "Sorry, you're not allowed to join this call.",
         "displayNameRequired": "Display name is required",
         "enterDisplayName": "Please enter your display name",
-        "feedbackHelp": "Your feedback will help us to improve our video experience.",
+        "feedbackHelp": "Your feedback will help other medical profesionals help this patient.",
         "feedbackQuestion": "Tell us about your call!",
         "thankYou": "Thank you for using __appName__!",
         "sorryFeedback": "We're sorry to hear that. Would you like to tell us more?",
@@ -506,7 +506,7 @@
         "average": "Average",
         "bad": "Bad",
         "good": "Good",
-        "rateExperience": "Please rate your meeting experience.",
+        "rateExperience": "Final Notes on the patient during this session",
         "veryBad": "Very Bad",
         "veryGood": "Very Good"
     },

@@ -77,7 +77,7 @@ class CalleeInfo extends Component<Props, State> {
 
     _playAudioInterval: ?number;
 
-    _ringingTimeout: ?number
+    _ringingTimeout: ?number;
 
     _setAudio: Function;
 

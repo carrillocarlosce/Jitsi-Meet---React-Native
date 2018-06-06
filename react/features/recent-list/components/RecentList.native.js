@@ -78,7 +78,7 @@ class RecentList extends Component<Props> {
         );
     }
 
-    _onPress: string => Function
+    _onPress: string => Function;
 
     /**
      * Handles the list's navigate action.
@@ -93,7 +93,7 @@ class RecentList extends Component<Props> {
         dispatch(appNavigate(url));
     }
 
-    _toDisplayableItem: Object => Object
+    _toDisplayableItem: Object => Object;
 
     /**
      * Creates a displayable list item of a recent list entry.
@@ -121,7 +121,7 @@ class RecentList extends Component<Props> {
         };
     }
 
-    _toDisplayableList: () => Array<Object>
+    _toDisplayableList: () => Array<Object>;
 
     /**
      * Transforms the history list to a displayable list
@@ -182,7 +182,7 @@ class RecentList extends Component<Props> {
         return displayableList;
     }
 
-    _toDateString: number => string
+    _toDateString: number => string;
 
     /**
      * Generates a date string for the item.
@@ -203,7 +203,7 @@ class RecentList extends Component<Props> {
         return m.format('lll');
     }
 
-    _toDurationString: number => string
+    _toDurationString: number => string;
 
     /**
      * Generates a duration string for the item.

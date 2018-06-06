@@ -1,6 +1,6 @@
 /* global $, APP, interfaceConfig */
 
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,max-len,no-alert,no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -103,7 +103,7 @@ function computeCameraVideoSize( // eslint-disable-line max-params
 
     switch (videoLayoutFit) {
     case 'height':
-        return [ videoSpaceHeight * aspectRatio, videoSpaceHeight ];
+        return [ videoSpaceHeight / aspectRatio, videoSpaceHeight * 100 ];
     case 'width':
         return [ videoSpaceWidth, videoSpaceWidth / aspectRatio ];
     case 'both': {
@@ -260,6 +260,28 @@ export class VideoContainer extends LargeContainer {
         this.wasVideoRendered = false;
 
         this.$wrapper = $('#largeVideoWrapper');
+
+        this.$pictureDoctor = $('#pictureDoctor');
+
+        this.$patientWrapper = $('#patientLargeVideoWrapper');
+
+        this.$notes = $('#doctorNotes');
+
+        this.$myCanvas = $('#myCanvas');
+
+        this.$patientNotes = $('#patientNotes');
+
+        this.$reminder = $('#reminder');
+
+        this.$imgCanvas = $('#imgCanvas');
+
+        this.$mediaButtons = $('#mediaButtons');
+
+        this.$waitingRoom = $('#waitingRoom');
+
+        this.$remoteVideo = $('#remoteVideos');
+
+        this.$newToolbox = $('.new-toolbox');
 
         /**
          * FIXME: currently using parent() because I can't come up with name
@@ -463,14 +485,72 @@ export class VideoContainer extends LargeContainer {
 
         this.positionRemoteStatusMessages();
 
+
+        this.$notes.css({ 'text-align': 'left',
+            'background-color': 'grey',
+            'height': '100%',
+            'right': '-2.5%',
+            'float': 'right',
+            'width': '50%',
+            'overflow': 'auto',
+            'position': 'fixed',
+            'padding-left': '2%' });
+
+        this.$patientNotes.css({ 'text-align': 'left',
+            'background-color': 'grey',
+            'height': '100%',
+            'right': '-2.5%',
+            'float': 'right',
+            'width': '30%',
+            'overflow': 'auto',
+            'position': 'fixed',
+            'padding-left': '2.5%' });
+
+        this.$reminder.css({ 'list-style-type': 'circle',
+            'margin': '0',
+            'padding': '5',
+            'width': '25%',
+            'position': 'fixed',
+            'bottom': '0',
+            'height': '100%',
+            'overflow': 'scroll',
+            'right': '0px',
+            'background-color': '#474747'
+
+        });
+        this.$imgCanvas.css({
+            'height': '30%',
+            'width': '100%'
+        });
+        this.$waitingRoom.css({ 'list-style-type': 'circle',
+            'align': 'center',
+            'margin': '0',
+            'padding': '5',
+            'width': '25%',
+            'top': '55%',
+            'position': 'fixed',
+            'bottom': '0',
+            'height': '85%',
+            'overflow': 'scroll',
+            'right': '0px',
+            'background-color': '#2b2828'
+        });
+        this.$mediaButtons.css({
+            'allign': 'center',
+            'padding': '1',
+            'width': '100%'
+        });
+        this.$pictureDoctor.css({
+            'width': '75%',
+            'height': '5%'
+        });
         this.$wrapper.animate({
-            width,
             height,
 
             top: verticalIndent,
             bottom: verticalIndent,
 
-            left: horizontalIndent,
+            left: 0,
             right: horizontalIndent
         }, {
             queue: false,
@@ -528,11 +608,11 @@ export class VideoContainer extends LargeContainer {
 
         stream.attach(this.$video[0]);
 
-        const flipX = stream.isLocal() && this.localFlipX;
+        // const flipX = stream.isLocal() && this.localFlipX;
 
-        this.$video.css({
-            transform: flipX ? 'scaleX(-1)' : 'none'
-        });
+        // this.$video.css({
+        //     transform: flipX ? 'scale(1)' : 'none'
+        // });
 
         this._updateBackground();
 
@@ -549,9 +629,10 @@ export class VideoContainer extends LargeContainer {
         if (!this.$video || !this.stream || !this.stream.isLocal()) {
             return;
         }
-        this.$video.css({
-            transform: this.localFlipX ? 'scaleX(-1)' : 'none'
-        });
+
+        // this.$video.css({
+        //     //transform: this.localFlipX ? 'scaleX(-1)' : 'none'
+        // });
 
         this._updateBackground();
     }

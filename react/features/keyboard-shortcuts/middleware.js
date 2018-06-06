@@ -17,7 +17,7 @@ MiddlewareRegistry.register(store => next => action => {
     switch (action.type) {
     case OPEN_KEYBOARD_SHORTCUTS_DIALOG:
         if (typeof APP === 'object') {
-            APP.keyboardshortcut.openDialog();
+            // APP.keyboardshortcut.openDialog();
         }
         break;
     }

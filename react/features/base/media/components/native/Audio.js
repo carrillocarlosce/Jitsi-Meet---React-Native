@@ -16,7 +16,7 @@ export default class Audio extends AbstractAudio {
     /**
      * Reference to 'react-native-sound} {@link Sound} instance.
      */
-    _sound: Sound
+    _sound: Sound;
 
     /**
      * A callback passed to the 'react-native-sound''s {@link Sound} instance,

@@ -156,7 +156,7 @@ class ConferenceNotification extends Component<Props, State> {
         return null;
     }
 
-    _getNotificationContentStyle: () => Array<Object>
+    _getNotificationContentStyle: () => Array<Object>;
 
     /**
      * Decides the color of the notification and some additional

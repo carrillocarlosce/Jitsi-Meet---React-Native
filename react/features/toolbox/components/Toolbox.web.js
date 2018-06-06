@@ -176,7 +176,7 @@ class Toolbox extends Component<Props, State> {
 
     state = {
         showOverflowMenu: false
-    }
+    };
 
     /**
      * Initializes a new {@code Toolbox} instance.

@@ -84,7 +84,7 @@ class StatelessDialog extends Component<Props> {
     /**
      * The functional component to be used for rendering the modal footer.
      */
-    _Footer: ?Function
+    _Footer: ?Function;
 
     _dialogElement: ?HTMLElement;
 
