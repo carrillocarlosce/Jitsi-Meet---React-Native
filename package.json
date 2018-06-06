@@ -4,7 +4,7 @@
   "description": "A sample app for the Jitsi Videobridge",
   "repository": {
     "type": "git",
-    "url": "git://github.com/BlakeEram/m-health-"
+    "url": "git://github.com/jitsi/jitsi-meet"
   },
   "keywords": [
     "jingle",
