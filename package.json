@@ -1,10 +1,10 @@
 {
-  "name": "m-health",
+  "name": "jitsi-meet",
   "version": "0.0.0",
   "description": "A sample app for the Jitsi Videobridge",
   "repository": {
     "type": "git",
-    "url": "git://github.com/BlakeEram/m-health"
+    "url": "git://github.com/BlakeEram/m-health-"
   },
   "keywords": [
     "jingle",
