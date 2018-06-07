@@ -48,7 +48,11 @@ export class AbstractWelcomePage extends Component<Props, *> {
         joining: false,
         room: '',
         roomPlaceholder: '',
-        updateTimeoutId: undefined
+        updateTimeoutId: undefined,
+        fName: '',
+        lName: '',
+        address: '',
+        phoneNumber: ''
     };
 
     /**
@@ -150,6 +154,22 @@ export class AbstractWelcomePage extends Component<Props, *> {
      */
     _isJoinDisabled() {
         return this.state.joining || !isRoomValid(this.state.room);
+    }
+
+    _onJoinTest: () => void;
+
+    /**
+     *
+     * @private
+     */
+    _onJoinTest() {
+
+        //console.log(this.state.fName);
+
+        let win = window.open('/blake?patient=false', '_blank');
+
+        win.focus();
+
     }
 
     _onJoin: () => void;

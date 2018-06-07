@@ -143,15 +143,51 @@ class WelcomePage extends AbstractWelcomePage {
                                 className = 'enter-room-input'
                                 onSubmit = { this._onFormSubmit }>
                                 <FieldTextStateless
-                                    autoFocus = { true }
+                                    autoFocus = { false }
                                     id = 'enter_room_field'
                                     isLabelHidden = { true }
                                     label = 'enter_room_field'
                                     onChange = { this._onRoomChange }
-                                    placeholder = { this.state.roomPlaceholder }
+                                    placeholder = 'Health Card Number'
                                     shouldFitContainer = { true }
                                     type = 'text'
                                     value = { this.state.room } />
+                                <FieldTextStateless
+                                    autoFocus = { false }
+                                    id = 'enter_fName_field'
+                                    isLabelHidden = { true }
+                                    label = 'enter_fName_field'
+                                    // onChange = { this._onRoomChange }
+                                    placeholder = 'First Name'
+                                    shouldFitContainer = { true }
+                                    type = 'text' />
+                                <FieldTextStateless
+                                    autoFocus = { false }
+                                    id = 'enter_lName_field'
+                                    isLabelHidden = { true }
+                                    label = 'enter_lName_field'
+                                    // onChange = { this._onRoomChange }
+                                    placeholder = 'Lase Name'
+                                    shouldFitContainer = { true }
+                                    type = 'text'/>
+                                <FieldTextStateless
+                                    autoFocus = { false }
+                                    id = 'enter_address_field'
+                                    isLabelHidden = { true }
+                                    label = 'enter_address_field'
+                                    // onChange = { this._onRoomChange }
+                                    placeholder = 'Address'
+                                    shouldFitContainer = { true }
+                                    type = 'text' />
+                                <FieldTextStateless
+                                    autoFocus = { false }
+                                    id = 'enter_phoneNumber_field'
+                                    isLabelHidden = { true }
+                                    label = 'enter_phoneNumber_field'
+                                    // onChange = { this._onRoomChange }
+                                    placeholder = 'PhoneNumber'
+                                    shouldFitContainer = { true }
+                                    type = 'text' />
                             </form>
                             <Button
                                 appearance = 'primary'
