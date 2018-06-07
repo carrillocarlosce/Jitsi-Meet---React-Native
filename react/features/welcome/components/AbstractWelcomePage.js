@@ -165,6 +165,8 @@ export class AbstractWelcomePage extends Component<Props, *> {
     _onJoinTest() {
 
         //console.log(this.state.fName);
+        let name = this.state.fName
+        console.log(name);
 
         let win = window.open('/blake?patient=false', '_blank');
 
