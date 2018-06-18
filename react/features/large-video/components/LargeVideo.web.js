@@ -117,6 +117,8 @@ export default class LargeVideo extends Component<*> {
 
       // json fetching
      componentDidMount() {
+
+
         console.log(this.state.urlParams.chiefComplaint);
 
          if (this.state.urlParams.chiefComplaint !== undefined) {
@@ -336,10 +338,21 @@ export default class LargeVideo extends Component<*> {
 
         // checks to see if recording is started
         if (this.state.recording === true) {
+            let stream;
 
             // starts an instance of the mediarecorder
             let video = document.getElementById('largeVideo');
-            var stream = video.captureStream();
+
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                // Do Firefox-related activities
+                stream = this.state.imgCanvas.captureStream();
+                console.log('firefox');
+            } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+                stream = video.captureStream();
+                console.log('chrome');
+            }
+
+
             let mediaRecorder = new MediaStreamRecorder(stream);
             this.state.mediaRecorder = mediaRecorder;
             this.state.snippetRecorder = mediaRecorder;
@@ -374,11 +387,7 @@ export default class LargeVideo extends Component<*> {
     }
 
     // todo set up 10 second snippet
-    recordSnippet(stream) {
-        // this.state.mediaConstraints = {
-        //     audio: true,
-        //     video: true
-        // };
+    recordSnippet() {
         if (this.state.snippet === true) {
             // starts an instance of the mediarecorder
             // type of video being recorded
@@ -744,7 +753,7 @@ export default class LargeVideo extends Component<*> {
                                 ref='largeVideo'
                                 autoPlay = { true }
                                 id = 'largeVideo'
-                                muted= { true }
+                                muted= { false }
                                 onClick= { this.zoomWebcam } />
                         </div>
                     </div>

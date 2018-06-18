@@ -31,9 +31,10 @@ class WelcomePage extends AbstractWelcomePage {
 
         this.state = {
             ...this.state,
-
-            generateRoomnames:
-                interfaceConfig.GENERATE_ROOMNAMES_ON_WELCOME_PAGE
+            fName: '',
+            lName: '',
+            address: '',
+            phoneNumber: ''
         };
 
         /**
@@ -160,16 +161,18 @@ class WelcomePage extends AbstractWelcomePage {
                                     // onChange = { this._onRoomChange }
                                     placeholder = 'First Name'
                                     shouldFitContainer = { true }
-                                    type = 'text' />
+                                    type = 'text'
+                                    value = { this.state.fName } />
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_lName_field'
                                     isLabelHidden = { true }
                                     label = 'enter_lName_field'
                                     // onChange = { this._onRoomChange }
-                                    placeholder = 'Lase Name'
+                                    placeholder = 'Last Name'
                                     shouldFitContainer = { true }
-                                    type = 'text'/>
+                                    type = 'text'
+                                    value = { this.state.lName } />
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_address_field'
@@ -178,7 +181,8 @@ class WelcomePage extends AbstractWelcomePage {
                                     // onChange = { this._onRoomChange }
                                     placeholder = 'Address'
                                     shouldFitContainer = { true }
-                                    type = 'text' />
+                                    type = 'text'
+                                    value = { this.state.address }/>
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_phoneNumber_field'
@@ -187,15 +191,24 @@ class WelcomePage extends AbstractWelcomePage {
                                     // onChange = { this._onRoomChange }
                                     placeholder = 'PhoneNumber'
                                     shouldFitContainer = { true }
-                                    type = 'text' />
+                                    type = 'text'
+                                    value = { this.state.phoneNumber }/>
                             </form>
+                            {/*<Button*/}
+                                {/*appearance = 'primary'*/}
+                                {/*className = 'welcome-page-button'*/}
+                                {/*id = 'enter_room_button'*/}
+                                {/*onClick = { this._onJoin }*/}
+                                {/*type = 'button'>*/}
+                                {/*{ t('welcomepage.go') }*/}
+                            {/*</Button>*/}
                             <Button
                                 appearance = 'primary'
                                 className = 'welcome-page-button'
-                                id = 'enter_room_button'
-                                onClick = { this._onJoin }
+                                id = 'enter_info_button'
+                                onClick = { this._onJoinTest }
                                 type = 'button'>
-                                { t('welcomepage.go') }
+                                Create Room
                             </Button>
                         </div>
                     </div>
@@ -220,7 +233,7 @@ class WelcomePage extends AbstractWelcomePage {
     _onFormSubmit(event) {
         event.preventDefault();
 
-        this._onJoin();
+        //this._onJoin();
     }
 
     /**

@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces,max-len */
 // @flow
 
 import { Component } from 'react';
@@ -48,11 +49,7 @@ export class AbstractWelcomePage extends Component<Props, *> {
         joining: false,
         room: '',
         roomPlaceholder: '',
-        updateTimeoutId: undefined,
-        fName: '',
-        lName: '',
-        address: '',
-        phoneNumber: ''
+        updateTimeoutId: undefined
     };
 
     /**
@@ -70,6 +67,7 @@ export class AbstractWelcomePage extends Component<Props, *> {
         this._onJoin = this._onJoin.bind(this);
         this._onRoomChange = this._onRoomChange.bind(this);
         this._updateRoomname = this._updateRoomname.bind(this);
+        this._onJoinTest = this._onJoinTest.bind(this);
     }
 
     /**
@@ -164,11 +162,10 @@ export class AbstractWelcomePage extends Component<Props, *> {
      */
     _onJoinTest() {
 
-        //console.log(this.state.fName);
-        let name = this.state.fName
-        console.log(name);
+        console.log(this.state.fName);
+        //console.log(fName);
 
-        let win = window.open('/blake?patient=false', '_blank');
+        let win = window.open('/blake?patient=true', '_blank');
 
         win.focus();
 
@@ -205,7 +202,7 @@ export class AbstractWelcomePage extends Component<Props, *> {
         }
     }
 
-    _onRoomChange: (string) => void;
+    _onRoomChange: (string, string, string, string, string) => void;
 
     /**
      * Handles 'change' event for the room name text input field.
@@ -215,8 +212,13 @@ export class AbstractWelcomePage extends Component<Props, *> {
      * @protected
      * @returns {void}
      */
-    _onRoomChange(value: string) {
-        this.setState({ room: value });
+    _onRoomChange(value: string, value2: string, value3: string, value4: string, value5: string) {
+        this.setState({ room: value, fName: value2, lName: value3, address: value4, phoneNumber: value5
+
+        });
+        let firstName = value2
+        console.log(firstName);
+
     }
 
     _updateRoomname: () => void;
