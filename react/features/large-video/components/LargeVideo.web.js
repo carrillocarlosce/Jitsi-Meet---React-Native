@@ -39,10 +39,10 @@ export default class LargeVideo extends Component<*> {
         this.handleClick = this.handleClick.bind(this);
         this.handleRoomChange = this.handleRoomChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        //this.takenPicture = this.takenPicture.bind(this);
-        this.recordCall = this.recordCall.bind(this);
-        this.recordSnippet = this.recordSnippet.bind(this);
-        this.mediaRecorder = this.mediaRecorder.bind(this);
+        this.takenPicture = this.takenPicture.bind(this);
+        // this.recordCall = this.recordCall.bind(this);
+        // this.recordSnippet = this.recordSnippet.bind(this);
+        // this.mediaRecorder = this.mediaRecorder.bind(this);
         this.onMediaError = this.onMediaError.bind(this);
         this.sendPhotoTo = this.sendPhotoTo.bind(this);
         this.zoomWebcam = this.zoomWebcam.bind(this);
@@ -107,7 +107,7 @@ export default class LargeVideo extends Component<*> {
 
 
         // getsmedia from computer
-        navigator.getUserMedia(this.state.mediaConstraints, this.recordCall, this.onMediaError);
+        // navigator.getUserMedia(this.state.mediaConstraints, this.recordCall, this.onMediaError);
 
     }
 
@@ -257,47 +257,47 @@ export default class LargeVideo extends Component<*> {
 
     // take picture of the screen
     // todo send photo to the server
-    // takenPicture() {
-    //     let a = document.createElement('a');
-    //
-    //     // creates a new element to paste canvas
-    //     if (this.state.zoomStrength === 1) {
-    //         html2canvas(this.state.imgCanvas, {
-    //             logging: true,
-    //             profile: true,
-    //             useCORS: true }).then(function(canvas) {
-    //             // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-    //             a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-    //             a.download = 'patientfilename.jpg';
-    //             a.click();
-    //         });
-    //     } else if (this.state.zoomStrength <= 2) {
-    //
-    //         let v = document.getElementById('largeVideo');
-    //         let ctx = this.state.imgCanvas.getContext('2d');
-    //         this.state.imgCanvas.style.width = this.state.imgCanvas.width + 1000;
-    //         this.state.imgCanvas.style.height = this.state.imgCanvas.height + 1000;
-    //         ctx.drawImage(v, 0, 0, this.state.imgCanvas.width, this.state.imgCanvas.height);
-    //
-    //         document.getElementById('imgCanvas').style.transform = 'scale(2,2)';
-    //         html2canvas(this.state.imgCanvas, {
-    //             logging: true,
-    //             profile: true,
-    //             useCORS: true }).then(function(canvas) {
-    //             // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-    //             a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-    //             ctx.drawImage(v, 0, 0, 300, 150);
-    //             // let zip = new JSZip();
-    //             // zip.generateAsync({ type: 'blob' })
-    //             //     .then(function(blob) {
-    //             //         FileSaver.saveAs(blob, 'hello.zip');
-    //             //     });
-    //             a.download = 'patientfilename.jpg';
-    //             a.click();
-    //             document.getElementById('imgCanvas').style.transform = 'scale(1,1)';
-    //         });
-    //     }
-    // }
+    takenPicture() {
+        let a = document.createElement('a');
+
+        // creates a new element to paste canvas
+        if (this.state.zoomStrength === 1) {
+            html2canvas(this.state.imgCanvas, {
+                logging: true,
+                profile: true,
+                useCORS: true }).then(function(canvas) {
+                // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                a.download = 'patientfilename.jpg';
+                a.click();
+            });
+        } else if (this.state.zoomStrength <= 2) {
+
+            let v = document.getElementById('largeVideo');
+            let ctx = this.state.imgCanvas.getContext('2d');
+            this.state.imgCanvas.style.width = this.state.imgCanvas.width + 1000;
+            this.state.imgCanvas.style.height = this.state.imgCanvas.height + 1000;
+            ctx.drawImage(v, 0, 0, this.state.imgCanvas.width, this.state.imgCanvas.height);
+
+            document.getElementById('imgCanvas').style.transform = 'scale(2,2)';
+            html2canvas(this.state.imgCanvas, {
+                logging: true,
+                profile: true,
+                useCORS: true }).then(function(canvas) {
+                // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                ctx.drawImage(v, 0, 0, 300, 150);
+                // let zip = new JSZip();
+                // zip.generateAsync({ type: 'blob' })
+                //     .then(function(blob) {
+                //         FileSaver.saveAs(blob, 'hello.zip');
+                //     });
+                a.download = 'patientfilename.jpg';
+                a.click();
+                document.getElementById('imgCanvas').style.transform = 'scale(1,1)';
+            });
+        }
+    }
 
 
     // todo will process chart of current patient with ERM/CRM
@@ -330,92 +330,92 @@ export default class LargeVideo extends Component<*> {
     // todo set up send to server when recording is finished
     // todo set up when doctor ends call, the recording will be sent to server
 
-    recordCall() {
-
-        // checks to see if recording is started
-        if (this.state.recording === true) {
-            let stream;
-
-            // starts an instance of the mediarecorder
-            let video = document.getElementById('largeVideo');
-
-            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-                // Do Firefox-related activities
-                stream = this.state.imgCanvas.captureStream();
-                console.log('firefox');
-            } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-                stream = video.captureStream();
-                console.log('chrome');
-            }
-
-
-            let mediaRecorder = new MediaStreamRecorder(stream);
-            this.state.mediaRecorder = mediaRecorder;
-            this.state.snippetRecorder = mediaRecorder;
-
-            // type of video being recorded
-            this.state.mediaRecorder.mimeType = 'audio/webm';
-            this.state.snippetRecorder.mimeType = 'video/webm';
-
-
-            // checks to see if there is data from being recorded, and will build the blob from it
-
-            this.state.mediaRecorder.start();
-
-            this.state.mediaRecorder.ondataavailable = function(blob) {
-                // POST/PUT "Blob" using FormData/XHR2
-                let zip = new JSZip();
-                zip.generateAsync({ type: 'blob' })
-                    .then(function(blob) {
-                        FileSaver.saveAs(blob, 'hello.zip');
-                    });
-                let blobURL = URL.createObjectURL(blob);
-                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
-            };
-
-            this.state.recording = false;
-        } else if (this.state.recording === false) {
-            this.state.mediaRecorder.stop();
-            console.log(this.state.recording);
-
-            console.log('recording stopped');
-        }
-    }
+    // recordCall() {
+    //
+    //     // checks to see if recording is started
+    //     if (this.state.recording === true) {
+    //         let stream;
+    //
+    //         // starts an instance of the mediarecorder
+    //         let video = document.getElementById('largeVideo');
+    //
+    //         if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+    //             // Do Firefox-related activities
+    //             stream = this.state.imgCanvas.captureStream();
+    //             console.log('firefox');
+    //         } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+    //             stream = video.captureStream();
+    //             console.log('chrome');
+    //         }
+    //
+    //
+    //         let mediaRecorder = new MediaStreamRecorder(stream);
+    //         this.state.mediaRecorder = mediaRecorder;
+    //         this.state.snippetRecorder = mediaRecorder;
+    //
+    //         // type of video being recorded
+    //         this.state.mediaRecorder.mimeType = 'audio/webm';
+    //         this.state.snippetRecorder.mimeType = 'video/webm';
+    //
+    //
+    //         // checks to see if there is data from being recorded, and will build the blob from it
+    //
+    //         this.state.mediaRecorder.start();
+    //
+    //         this.state.mediaRecorder.ondataavailable = function(blob) {
+    //             // POST/PUT "Blob" using FormData/XHR2
+    //             let zip = new JSZip();
+    //             zip.generateAsync({ type: 'blob' })
+    //                 .then(function(blob) {
+    //                     FileSaver.saveAs(blob, 'hello.zip');
+    //                 });
+    //             let blobURL = URL.createObjectURL(blob);
+    //             document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+    //         };
+    //
+    //         this.state.recording = false;
+    //     } else if (this.state.recording === false) {
+    //         this.state.mediaRecorder.stop();
+    //         console.log(this.state.recording);
+    //
+    //         console.log('recording stopped');
+    //     }
+    // }
 
     // todo set up 10 second snippet
-    recordSnippet() {
-        if (this.state.snippet === true) {
-            // starts an instance of the mediarecorder
-            // type of video being recorded
-            console.log('snippet has begun');
+    // recordSnippet() {
+    //     if (this.state.snippet === true) {
+    //         // starts an instance of the mediarecorder
+    //         // type of video being recorded
+    //         console.log('snippet has begun');
+    //
+    //         // media recorder starts and goes for 10 seconds
+    //         this.state.snippetRecorder.start(11000);
+    //
+    //         this.state.snippet = false;
+    //         this.state.snippetDone = true;
+    //         window.setTimeout(this.mediaRecorder, 11000);
+    //
+    //
+    //     } else if (this.state.snippet === false) {
+    //         console.log('got here');
+    //         this.state.snippet = true;
+    //         this.recordSnippet();
+    //     }
+    // }
 
-            // media recorder starts and goes for 10 seconds
-            this.state.snippetRecorder.start(11000);
-
-            this.state.snippet = false;
-            this.state.snippetDone = true;
-            window.setTimeout(this.mediaRecorder, 11000);
-
-
-        } else if (this.state.snippet === false) {
-            console.log('got here');
-            this.state.snippet = true;
-            this.recordSnippet();
-        }
-    }
-
-    mediaRecorder(stream) {
-        if (this.state.snippetDone === true) {
-            console.log('stopping snippet');
-            this.state.snippetDone = false;
-            this.state.snippetRecorder.stop();
-        } else if (this.state.snippetDone === false) {
-            console.log('begin snippet');
-            this.recordSnippet();
-        } else {
-            console.log('nothing');
-        }
-    }
+    // mediaRecorder(stream) {
+    //     if (this.state.snippetDone === true) {
+    //         console.log('stopping snippet');
+    //         this.state.snippetDone = false;
+    //         this.state.snippetRecorder.stop();
+    //     } else if (this.state.snippetDone === false) {
+    //         console.log('begin snippet');
+    //         this.recordSnippet();
+    //     } else {
+    //         console.log('nothing');
+    //     }
+    // }
 
     // todo send information to selected place
     // checks to see if doctor is done with patient;
@@ -565,12 +565,11 @@ export default class LargeVideo extends Component<*> {
                             <br></br>
                             <p style= { text } >Click Main Video to Zoom in</p>
                             <p style= { text } >Click Video below to take a Photo</p>
-                            {/*<canvas id = 'imgCanvas' onClick= { this.takenPicture }> </canvas>*/}
-                            <canvas id = 'imgCanvas'> </canvas>
+                            <canvas id = 'imgCanvas' onClick= { this.takenPicture }> </canvas>
                             <p style= { text } >By default the image will be not be sent</p>
                             <button style= { mediaButtons } onClick={ this.sendPhotoTo } >Send image to CRM</button>
-                            <button type='button' value='snippet' style = { mediaButtons } onClick= { this.mediaRecorder }>Record 10 second snippet</button>
-                            <button style= { mediaButtons } onClick= { this.recordCall }>Stop recording the call</button>
+                            {/*<button type='button' value='snippet' style = { mediaButtons } onClick= { this.mediaRecorder }>Record 10 second snippet</button>*/}
+                            {/*<button style= { mediaButtons } onClick= { this.recordCall }>Stop recording the call</button>*/}
                         </ul>
                     </div>
                     <div>
@@ -584,7 +583,6 @@ export default class LargeVideo extends Component<*> {
                         <div id='sharedVideoIFrame' />
                     </div>
                     <div id='etherpad' />
-
                     <div id='dominantSpeaker'>
                         <div className='dynamic-shadow' />
                         <img
