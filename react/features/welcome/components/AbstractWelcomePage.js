@@ -162,12 +162,12 @@ export class AbstractWelcomePage extends Component<Props, *> {
      */
     _onJoinTest() {
 
-        console.log(this.state.fName);
+        //console.log(this.state.fName);
         //console.log(fName);
 
-        let win = window.open('/blake?patient=true', '_blank');
+        //let win = window.open('/blake?patient=true', '_blank');
 
-        win.focus();
+        //win.focus();
 
     }
 
@@ -217,7 +217,7 @@ export class AbstractWelcomePage extends Component<Props, *> {
 
         });
         let firstName = value2
-        console.log(firstName);
+        //console.log(firstName);
 
     }
 

@@ -28,14 +28,15 @@ class WelcomePage extends AbstractWelcomePage {
      */
     constructor(props) {
         super(props);
-
         this.state = {
             ...this.state,
             fName: '',
             lName: '',
             address: '',
-            phoneNumber: ''
+            phoneNumber: '',
+            healthCardNumber: ''
         };
+
 
         /**
          * The HTML Element used as the container for additional content. Used
@@ -104,12 +105,40 @@ class WelcomePage extends AbstractWelcomePage {
         document.body.classList.remove('welcome-page');
     }
 
+    handleHealthCardChange = (e) => {
+        this.setState({
+            healthCardNumber: e.target.value
+        });
+    }
+
+    handleFirstNameChange = (e) => {
+        this.setState({
+            fName: e.target.value
+        });
+    }
+    handleLastNameChange = (e) => {
+        this.setState({
+            lName: e.target.value
+        });
+    }
+    handleAddressChange = (e) => {
+        this.setState({
+            address: e.target.value
+        });
+    }
+    handlePhoneNumberChange = (e) => {
+        this.setState({
+            phoneNumber: e.target.value
+        });
+    }
+
     /**
      * Implements React's {@link Component#render()}.
      *
      * @inheritdoc
      * @returns {ReactElement|null}
      */
+
     render() {
         const { t } = this.props;
         const { APP_NAME } = interfaceConfig;
@@ -144,55 +173,56 @@ class WelcomePage extends AbstractWelcomePage {
                                 className = 'enter-room-input'
                                 onSubmit = { this._onFormSubmit }>
                                 <FieldTextStateless
+                                    name = 'HealthCardNumber'
                                     autoFocus = { false }
                                     id = 'enter_room_field'
                                     isLabelHidden = { true }
                                     label = 'enter_room_field'
-                                    onChange = { this._onRoomChange }
                                     placeholder = 'Health Card Number'
                                     shouldFitContainer = { true }
                                     type = 'text'
-                                    value = { this.state.room } />
+                                    value ={ this.state.healthCardNumber }
+                                    onChange = {this.handleHealthCardChange} />
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_fName_field'
                                     isLabelHidden = { true }
                                     label = 'enter_fName_field'
-                                    // onChange = { this._onRoomChange }
                                     placeholder = 'First Name'
                                     shouldFitContainer = { true }
                                     type = 'text'
-                                    value = { this.state.fName } />
+                                    value = { this.state.fName }
+                                    onChange = {this.handleFirstNameChange}/>
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_lName_field'
                                     isLabelHidden = { true }
                                     label = 'enter_lName_field'
-                                    // onChange = { this._onRoomChange }
                                     placeholder = 'Last Name'
                                     shouldFitContainer = { true }
                                     type = 'text'
-                                    value = { this.state.lName } />
+                                    value = { this.state.lName }
+                                    onChange = {this.handleLastNameChange}/>
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_address_field'
                                     isLabelHidden = { true }
                                     label = 'enter_address_field'
-                                    // onChange = { this._onRoomChange }
                                     placeholder = 'Address'
                                     shouldFitContainer = { true }
                                     type = 'text'
-                                    value = { this.state.address }/>
+                                    value = { this.state.address }
+                                    onChange = {this.handleAddressChange}/>
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_phoneNumber_field'
                                     isLabelHidden = { true }
                                     label = 'enter_phoneNumber_field'
-                                    // onChange = { this._onRoomChange }
                                     placeholder = 'PhoneNumber'
                                     shouldFitContainer = { true }
                                     type = 'text'
-                                    value = { this.state.phoneNumber }/>
+                                    value = { this.state.phoneNumber }
+                                    onChange = {this.handlePhoneNumberChange}/>
                             </form>
                             {/*<Button*/}
                                 {/*appearance = 'primary'*/}
@@ -206,9 +236,9 @@ class WelcomePage extends AbstractWelcomePage {
                                 appearance = 'primary'
                                 className = 'welcome-page-button'
                                 id = 'enter_info_button'
-                                onClick = { this._onJoinTest }
+                                onClick = { this._onFormSubmit}
                                 type = 'button'>
-                                Create Room
+                                Send Info
                             </Button>
                         </div>
                     </div>
@@ -232,7 +262,12 @@ class WelcomePage extends AbstractWelcomePage {
      */
     _onFormSubmit(event) {
         event.preventDefault();
-
+        console.log('test');
+        console.log(this.state.healthCardNumber);
+        console.log(this.state.fName);
+        console.log(this.state.lName);
+        console.log(this.state.address);
+        console.log(this.state.phoneNumber);
         //this._onJoin();
     }
 
