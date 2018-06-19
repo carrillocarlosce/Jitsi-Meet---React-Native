@@ -40,7 +40,7 @@ export default class LargeVideo extends Component<*> {
         this.handleRoomChange = this.handleRoomChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.takenPicture = this.takenPicture.bind(this);
-        // this.recordSnip = this.recordSnip.bind(this);
+        this.recordSnip = this.recordSnip.bind(this);
         // this.recordCall = this.recordCall.bind(this);
         this.onMediaError = this.onMediaError.bind(this);
         this.sendPhotoTo = this.sendPhotoTo.bind(this);
@@ -108,10 +108,6 @@ export default class LargeVideo extends Component<*> {
 
     // json fetching
     componentDidMount() {
-
-
-        console.log(this.state.urlParams.chiefComplaint);
-
         if (this.state.urlParams.chiefComplaint !== undefined) {
             this.state.chiefcomplaint = this.state.urlParams.chiefComplaint;
         }
@@ -130,6 +126,8 @@ export default class LargeVideo extends Component<*> {
             $('#videospace').animate({
                 width: '50%'
             });
+
+            alert("Press okay when you're ready to see the patient");
             document.getElementById('largeVideoWrapper').style.width = '50%';
             this.state.zoomCanvas = document.getElementById('largeVideo');
 
@@ -162,12 +160,14 @@ export default class LargeVideo extends Component<*> {
             $('#videospace').animate({
                 width: '70%'
             });
+            
 
         } else {
             document.getElementById('largeVideoWrapper').style.width = '70%';
             $('#videospace').animate({
                 width: '70%'
             });
+            //alert('Please schedule an appointment with your doctor');
 
         }
 
@@ -325,40 +325,40 @@ export default class LargeVideo extends Component<*> {
     // todo set up send to server when recording is finished
     // todo set up when doctor ends call, the recording will be sent to server
 
-    // recordSnip() {
-    //     // checks to see if recording is started
-    //         let stream;
-    //         let video = document.getElementById('largeVideo');
-    //
-    //         if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-    //             // Do Firefox-related activities
-    //             stream = this.state.imgCanvas.captureStream();
-    //             console.log('firefox');
-    //         } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-    //             stream = video.captureStream();
-    //             console.log('chrome');
-    //         }
-    //
-    //         let mediaRecorder = new MediaStreamRecorder(stream);
-    //         this.state.snippetRecorder = mediaRecorder;
-    //
-    //         // type of video being recorded
-    //         this.state.snippetRecorder.mimeType = 'video/webm';
-    //
-    //         this.state.snippetRecorder.start(11000);
-    //         console.log('recording for 10 seconds');
-    //
-    //         this.state.snippetRecorder.ondataavailable = function(blob) {
-    //             // POST/PUT "Blob" using FormData/XHR2
-    //             let zip = new JSZip();
-    //             // zip.generateAsync({ type: 'blob' })
-    //             //     .then(function(blob) {
-    //             //         FileSaver.saveAs(blob, 'hello.zip');
-    //             //     });
-    //             let blobURL = URL.createObjectURL(blob);
-    //             document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
-    //         };
-    // }
+    recordSnip() {
+        // checks to see if recording is started
+            let stream;
+            let video = document.getElementById('largeVideo');
+
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                // Do Firefox-related activities
+                stream = this.state.imgCanvas.captureStream();
+                console.log('firefox');
+            } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+                stream = video.captureStream();
+                console.log('chrome');
+            }
+
+            let mediaRecorder = new MediaStreamRecorder(stream);
+            this.state.snippetRecorder = mediaRecorder;
+
+            // type of video being recorded
+            this.state.snippetRecorder.mimeType = 'video/webm';
+
+            this.state.snippetRecorder.start(11000);
+            console.log('recording for 10 seconds');
+
+            this.state.snippetRecorder.ondataavailable = function(blob) {
+                // POST/PUT "Blob" using FormData/XHR2
+                //let zip = new JSZip();
+                // zip.generateAsync({ type: 'blob' })
+                //     .then(function(blob) {
+                //         FileSaver.saveAs(blob, 'hello.zip');
+                //     });
+                let blobURL = URL.createObjectURL(blob);
+                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+            };
+    }
 
     // recordCall() {
     //     if (this.state.recording === false) {
@@ -722,7 +722,7 @@ export default class LargeVideo extends Component<*> {
                         <br></br>
                         <br></br>
                         <br></br>
-                        <h1>Please Schedule an appointment with <br></br> your doctor</h1>
+                        <h1>Please schedule <br></br>  an appointment with <br></br> your doctor</h1>
                         <p>&copy; m-Health Solutions 2018</p>
                     </div>
                     <div id='sharedVideo'>
