@@ -145,8 +145,6 @@ export default class LargeVideo extends Component<*> {
                     ctx.drawImage(v, 0, 0, 300, 150);
                 }, 20);
             }, false);
-
-            this.recordCall()
         } else if (this.state.urlParams.patient === 'true') {
             let consent = false;
             while (consent === false) {
@@ -510,6 +508,7 @@ export default class LargeVideo extends Component<*> {
                     className='videocontainer'
                     id='largeVideoContainer'>
                     <div id='doctorNotes'>
+                        <button id = 'recordCall' type='button' value='snippet' style = { patientChart } onClick= { this.recordCall }>Record the call</button>
                         <h3 style= { text } >Reminders for Patient:</h3>
                         <br></br>
                         <div>
