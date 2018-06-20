@@ -41,7 +41,7 @@ export default class LargeVideo extends Component<*> {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.takenPicture = this.takenPicture.bind(this);
         this.recordSnip = this.recordSnip.bind(this);
-        // this.recordCall = this.recordCall.bind(this);
+        this.recordCall = this.recordCall.bind(this);
         this.onMediaError = this.onMediaError.bind(this);
         this.sendPhotoTo = this.sendPhotoTo.bind(this);
         this.zoomWebcam = this.zoomWebcam.bind(this);
@@ -160,7 +160,7 @@ export default class LargeVideo extends Component<*> {
             $('#videospace').animate({
                 width: '70%'
             });
-            
+
 
         } else {
             document.getElementById('largeVideoWrapper').style.width = '70%';
@@ -360,48 +360,48 @@ export default class LargeVideo extends Component<*> {
             };
     }
 
-    // recordCall() {
-    //     if (this.state.recording === false) {
-    //         console.log('stopped recording');
-    //         this.state.mediaRecorder.stop();
-    //     } else {
-    //
-    //         // checks to see if recording is started
-    //         let stream;
-    //         let video = document.getElementById('largeVideo');
-    //
-    //         if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-    //             // Do Firefox-related activities
-    //             stream = this.state.imgCanvas.captureStream();
-    //             console.log('firefox');
-    //         } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-    //             stream = video.captureStream();
-    //             console.log('chrome');
-    //         }
-    //
-    //         let mediaRecorder = new MediaStreamRecorder(stream);
-    //         this.state.mediaRecorder = mediaRecorder;
-    //
-    //         // type of video being recorded
-    //         this.state.mediaRecorder.mimeType = 'video/webm';
-    //
-    //         this.state.mediaRecorder.start();
-    //         console.log('recording call');
-    //
-    //         this.state.mediaRecorder.ondataavailable = function (blob) {
-    //             // POST/PUT "Blob" using FormData/XHR2
-    //             //let zip = new JSZip();
-    //             // zip.generateAsync({ type: 'blob' })
-    //             //     .then(function(blob) {
-    //             //         FileSaver.saveAs(blob, 'hello.zip');
-    //             //     });
-    //             let blobURL = URL.createObjectURL(blob);
-    //             document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
-    //         };
-    //         this.state.recording = false;
-    //         document.getElementById('recordCall').style.visibility = 'hidden';
-    //     }
-    // }
+    recordCall() {
+        if (this.state.recording === false) {
+            console.log('stopped recording');
+            this.state.mediaRecorder.stop();
+        } else {
+
+            // checks to see if recording is started
+            let stream;
+            let video = document.getElementById('largeVideo');
+
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                // Do Firefox-related activities
+                stream = this.state.imgCanvas.captureStream();
+                console.log('firefox');
+            } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+                stream = video.captureStream();
+                console.log('chrome');
+            }
+
+            let mediaRecorder = new MediaStreamRecorder(stream);
+            this.state.mediaRecorder = mediaRecorder;
+
+            // type of video being recorded
+            this.state.mediaRecorder.mimeType = 'video/webm';
+
+            this.state.mediaRecorder.start(55000);
+            console.log('recording call');
+
+            this.state.mediaRecorder.ondataavailable = function (blob) {
+                // POST/PUT "Blob" using FormData/XHR2
+                //let zip = new JSZip();
+                // zip.generateAsync({ type: 'blob' })
+                //     .then(function(blob) {
+                //         FileSaver.saveAs(blob, 'hello.zip');
+                //     });
+                let blobURL = URL.createObjectURL(blob);
+                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+            };
+            this.state.recording = false;
+            document.getElementById('recordCall').style.visibility = 'hidden';
+        }
+    }
 
 
     // mediaRecorder(stream) {
