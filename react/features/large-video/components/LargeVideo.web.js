@@ -128,7 +128,7 @@ export default class LargeVideo extends Component<*> {
             });
 
             alert("This call will be recorded");
-            this.recordCall()
+
             document.getElementById('largeVideoWrapper').style.width = '50%';
             this.state.zoomCanvas = document.getElementById('largeVideo');
 
@@ -145,6 +145,8 @@ export default class LargeVideo extends Component<*> {
                     ctx.drawImage(v, 0, 0, 300, 150);
                 }, 20);
             }, false);
+
+            this.recordCall()
         } else if (this.state.urlParams.patient === 'true') {
             let consent = false;
             while (consent === false) {
