@@ -145,8 +145,6 @@ export default class LargeVideo extends Component<*> {
                     ctx.drawImage(v, 0, 0, 300, 150);
                 }, 20);
             }, false);
-
-            this.recordCall()
         } else if (this.state.urlParams.patient === 'true') {
             let consent = false;
             while (consent === false) {
