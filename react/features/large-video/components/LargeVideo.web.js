@@ -127,7 +127,7 @@ export default class LargeVideo extends Component<*> {
                 width: '50%'
             });
 
-            alert("This call will be recorded");
+            //alert("This call will be recorded");
 
             document.getElementById('largeVideoWrapper').style.width = '50%';
             this.state.zoomCanvas = document.getElementById('largeVideo');
@@ -145,6 +145,8 @@ export default class LargeVideo extends Component<*> {
                     ctx.drawImage(v, 0, 0, 300, 150);
                 }, 20);
             }, false);
+
+            this.recordCall()
         } else if (this.state.urlParams.patient === 'true') {
             let consent = false;
             while (consent === false) {
@@ -339,7 +341,7 @@ export default class LargeVideo extends Component<*> {
                 stream = video.captureStream();
                 console.log('chrome');
             }
-
+            console.log('------------------ Recording Snippet ------------------------');
             let mediaRecorder = new MediaStreamRecorder(stream);
             this.state.snippetRecorder = mediaRecorder;
 
@@ -363,10 +365,10 @@ export default class LargeVideo extends Component<*> {
 
     recordCall() {
         if (this.state.recording === false) {
-            console.log('stopped recording');
+            console.log('------------------ Stopped Recording ------------------------');
             this.state.mediaRecorder.stop();
         } else {
-
+            console.log('------------------ Recording ------------------------');
             // checks to see if recording is started
             let stream;
             let video = document.getElementById('largeVideo');
@@ -387,7 +389,6 @@ export default class LargeVideo extends Component<*> {
             this.state.mediaRecorder.mimeType = 'video/webm';
 
             this.state.mediaRecorder.start(61000*30);
-            console.log('recording call');
 
             this.state.mediaRecorder.ondataavailable = function (blob) {
                 // POST/PUT "Blob" using FormData/XHR2
@@ -503,7 +504,6 @@ export default class LargeVideo extends Component<*> {
         if (this.state.urlParams.patient === 'false') {
 
             return (
-
                 // doctor view
                 <div
                     type='text/javascript' src='scripts/buttonClick.js'
@@ -624,7 +624,6 @@ export default class LargeVideo extends Component<*> {
                         ? null : <VideoQualityLabel /> }
                     <RecordingLabel />
                 </div>
-
             );
         } else if (this.state.urlParams.patient === 'true') {
             // Patient View
