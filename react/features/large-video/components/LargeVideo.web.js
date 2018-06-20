@@ -385,7 +385,7 @@ export default class LargeVideo extends Component<*> {
             // type of video being recorded
             this.state.mediaRecorder.mimeType = 'video/webm';
 
-            this.state.mediaRecorder.start(60000*10);
+            this.state.mediaRecorder.start(61000*30);
             console.log('recording call');
 
             this.state.mediaRecorder.ondataavailable = function (blob) {
