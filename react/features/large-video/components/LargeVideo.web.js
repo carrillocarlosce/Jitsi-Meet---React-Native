@@ -127,7 +127,8 @@ export default class LargeVideo extends Component<*> {
                 width: '50%'
             });
 
-            alert("Press okay when you're ready to see the patient");
+            alert("This call will be recorded");
+            this.recordCall()
             document.getElementById('largeVideoWrapper').style.width = '50%';
             this.state.zoomCanvas = document.getElementById('largeVideo');
 
