@@ -74,7 +74,6 @@ export default class LargeVideo extends Component<*> {
         };
 
 
-
         // state variables
         // todo set up medication, allergies, reminders through the api
         this.state = {
@@ -100,9 +99,6 @@ export default class LargeVideo extends Component<*> {
             urlParams: urlParams
         };
 
-
-        // getsmedia from computer
-        // navigator.getUserMedia(this.state.mediaConstraints, this.recordSnip, this.onMediaError);
 
     }
 
@@ -145,6 +141,8 @@ export default class LargeVideo extends Component<*> {
                     ctx.drawImage(v, 0, 0, 300, 150);
                 }, 20);
             }, false);
+
+            setTimeout(this.recordCall(), 1000);
         } else if (this.state.urlParams.patient === 'true') {
             let consent = false;
             while (consent === false) {
@@ -358,6 +356,7 @@ export default class LargeVideo extends Component<*> {
                 //     });
                 let blobURL = URL.createObjectURL(blob);
                 document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+                console.log('------------------ Video sent to Database ------------------------');
             };
     }
 
@@ -395,27 +394,13 @@ export default class LargeVideo extends Component<*> {
                 //     .then(function(blob) {
                 //         FileSaver.saveAs(blob, 'hello.zip');
                 //     });
-                let blobURL = URL.createObjectURL(blob);
-                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+                // let blobURL = URL.createObjectURL(blob);
+                // document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+                console.log('------------------ Video sent to Database ------------------------');
             };
             this.state.recording = false;
-            document.getElementById('recordCall').style.visibility = 'hidden';
         }
     }
-
-
-    // mediaRecorder(stream) {
-    //     if (this.state.snippetDone === true) {
-    //         console.log('stopping snippet');
-    //         this.state.snippetDone = false;
-    //         this.state.snippetRecorder.stop();
-    //     } else if (this.state.snippetDone === false) {
-    //         console.log('begin snippet');
-    //         this.recordSnippet();
-    //     } else {
-    //         console.log('nothing');
-    //     }
-    // }
 
     // todo send information to selected place
     // checks to see if doctor is done with patient;
@@ -508,7 +493,6 @@ export default class LargeVideo extends Component<*> {
                     className='videocontainer'
                     id='largeVideoContainer'>
                     <div id='doctorNotes'>
-                        <button id = 'recordCall' type='button' value='snippet' style = { patientChart } onClick= { this.recordCall }>Record the call</button>
                         <h3 style= { text } >Reminders for Patient:</h3>
                         <br></br>
                         <div>
@@ -571,8 +555,6 @@ export default class LargeVideo extends Component<*> {
                             <p style= { text } >By default the image will be not be sent</p>
                             <button style= { mediaButtons } onClick={ this.sendPhotoTo } >Send image to CRM</button>
                             <button style= { mediaButtons } onClick= { this.recordSnip }>10 seconds snippet</button>
-                            <button id = 'recordCall' type='button' value='snippet' style = { mediaButtons } onClick= { this.recordCall }>Record the call</button>
-
                         </ul>
                     </div>
                     <div>
