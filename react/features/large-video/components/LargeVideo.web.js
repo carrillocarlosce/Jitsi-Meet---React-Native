@@ -403,7 +403,7 @@ export default class LargeVideo extends Component<*> {
     }
 
     // todo send information to selected place
-    // checks to see if doctor is done with patient;
+    // checks to see if doctor is done with patient
     onFinishWithPatient() {
         const response = confirm('Are you sure you are done with this patient. Press Ok to accept');
         if (response === true) {
@@ -520,23 +520,25 @@ export default class LargeVideo extends Component<*> {
                         <form onSubmit = { this.handleSubmit }>
                             <textarea style = { overflow } rows="4" cols="35" id="doctorCallNotes"></textarea>
                         </form>
-                        <h3 id = 'finishLabel' style= { text } >Finished with Patient</h3>
-                        <form id = 'finishForm'>
-                            <p style={ text }> What would you like to send to the server?:</p>
-                            <label style={ text } >
-                                Name
-                                <input style= { checkBoxes } type="Checkbox" name="name" /><br></br>
-                                Notes
-                                <input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>
-                                Medical Record
-                                <input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>
-                                Video
-                                <input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>
-                                Nothing
-                                <input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>
-                            </label>
-                            <br></br>
-                        </form>
+                        {/*<h3 id = 'finishLabel' style= { text } >Finished with Patient</h3>*/}
+                        {/*<form id = 'finishForm'>*/}
+                            {/*<p style={ text }> What would you like to send to the server?:</p>*/}
+                            {/*<label style={ text } >*/}
+                                {/*Name*/}
+                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /><br></br>*/}
+                                {/*Notes*/}
+                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
+                                {/*Medical Record*/}
+                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
+                                {/*Video*/}
+                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
+                                {/*Nothing*/}
+                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
+                            {/*</label>*/}
+                            {/*<br></br>*/}
+                        {/*</form>*/}
+                        <br></br>
+                        <br></br>
                         <button style= { patientChart } id = 'finishButton' onClick={this.onFinishWithPatient}> Click me when youre finished with the patient </button>
                     </div>
                     <div>
