@@ -479,10 +479,10 @@ export default class LargeVideo extends Component<*> {
         };
         let text = {
             color: 'ffffff'
-        }
+        };
         let overflow = {
             overflow: 'auto'
-        }
+        };
 
         if (this.state.urlParams.patient === 'false') {
 

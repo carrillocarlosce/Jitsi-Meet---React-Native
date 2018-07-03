@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* global APP, config, interfaceConfig, JitsiMeetJS */
 
 import Button from '@atlaskit/button';
@@ -140,6 +141,13 @@ class WelcomePage extends AbstractWelcomePage {
      */
 
     render() {
+
+        let text = {
+            color: 'ffffff',
+            visibility: 'hidden',
+            textalign: 'center'
+        };
+
         const { t } = this.props;
         const { APP_NAME } = interfaceConfig;
         const showAdditionalContent = this._shouldShowAdditionalContent();
@@ -168,6 +176,7 @@ class WelcomePage extends AbstractWelcomePage {
                                     { app: APP_NAME }) }
                             </p>
                         </div>
+                        <h1 id = 'msgTxt' style = { text } >Information was sent to m-Health, we will get back to you shortly</h1>
                         <div id = 'new_enter_room'>
                             <form
                                 className = 'enter-room-input'
@@ -179,16 +188,19 @@ class WelcomePage extends AbstractWelcomePage {
                                     isLabelHidden = { true }
                                     label = 'enter_room_field'
                                     placeholder = 'Health Card Number'
+                                    required
                                     shouldFitContainer = { true }
-                                    type = 'text'
+                                    type = 'number'
                                     value ={ this.state.healthCardNumber }
-                                    onChange = {this.handleHealthCardChange} />
+                                    onChange = {this.handleHealthCardChange}
+                                />
                                 <FieldTextStateless
                                     autoFocus = { false }
                                     id = 'enter_fName_field'
                                     isLabelHidden = { true }
                                     label = 'enter_fName_field'
                                     placeholder = 'First Name'
+                                    required
                                     shouldFitContainer = { true }
                                     type = 'text'
                                     value = { this.state.fName }
@@ -199,6 +211,7 @@ class WelcomePage extends AbstractWelcomePage {
                                     isLabelHidden = { true }
                                     label = 'enter_lName_field'
                                     placeholder = 'Last Name'
+                                    required
                                     shouldFitContainer = { true }
                                     type = 'text'
                                     value = { this.state.lName }
@@ -209,6 +222,7 @@ class WelcomePage extends AbstractWelcomePage {
                                     isLabelHidden = { true }
                                     label = 'enter_address_field'
                                     placeholder = 'Address'
+                                    required
                                     shouldFitContainer = { true }
                                     type = 'text'
                                     value = { this.state.address }
@@ -219,11 +233,20 @@ class WelcomePage extends AbstractWelcomePage {
                                     isLabelHidden = { true }
                                     label = 'enter_phoneNumber_field'
                                     placeholder = 'PhoneNumber'
+                                    required
                                     shouldFitContainer = { true }
-                                    type = 'text'
+                                    type = 'number'
                                     value = { this.state.phoneNumber }
                                     onChange = {this.handlePhoneNumberChange}/>
+                                <Button
+                                    appearance = 'primary'
+                                    className = 'welcome-page-button'
+                                    id = 'enter_info_button'
+                                    type = 'submit'>
+                                    Send Info
+                                </Button>
                             </form>
+
                             {/*<Button*/}
                                 {/*appearance = 'primary'*/}
                                 {/*className = 'welcome-page-button'*/}
@@ -232,14 +255,7 @@ class WelcomePage extends AbstractWelcomePage {
                                 {/*type = 'button'>*/}
                                 {/*{ t('welcomepage.go') }*/}
                             {/*</Button>*/}
-                            <Button
-                                appearance = 'primary'
-                                className = 'welcome-page-button'
-                                id = 'enter_info_button'
-                                onClick = { this._onFormSubmit}
-                                type = 'button'>
-                                Send Info
-                            </Button>
+
                         </div>
                     </div>
                     { showAdditionalContent
@@ -262,12 +278,32 @@ class WelcomePage extends AbstractWelcomePage {
      */
     _onFormSubmit(event) {
         event.preventDefault();
-        console.log('test');
         console.log(this.state.healthCardNumber);
         console.log(this.state.fName);
         console.log(this.state.lName);
         console.log(this.state.address);
         console.log(this.state.phoneNumber);
+        let consent = false;
+        while (consent === false) {
+            const response = confirm('Is all information correct?. Press Ok to accept');
+            if (response === true) {
+                consent = true;
+                document.getElementById('new_enter_room').style.visibility = 'hidden';
+                document.getElementById('enter_fName_field').style.visibility = 'hidden';
+                document.getElementById('enter_lName_field').style.visibility = 'hidden';
+                document.getElementById('enter_address_field').style.visibility = 'hidden';
+                document.getElementById('enter_phoneNumber_field').style.visibility = 'hidden';
+                document.getElementById('msgTxt').style.visibility = 'visible';
+            } else {
+                return;
+            }
+
+        }
+        document.getElementById('new_enter_room').style.visibility = 'hidden';
+        document.getElementById('enter_fName_field').style.visibility = 'hidden';
+        document.getElementById('enter_lName_field').style.visibility = 'hidden';
+        document.getElementById('enter_address_field').style.visibility = 'hidden';
+        document.getElementById('enter_phoneNumber_field').style.visibility = 'hidden';
         //this._onJoin();
     }
 
