@@ -148,6 +148,10 @@ class WelcomePage extends AbstractWelcomePage {
             textalign: 'center'
         };
 
+        let white = {
+            color: 'ffffff'
+        };
+
         const { t } = this.props;
         const { APP_NAME } = interfaceConfig;
         const showAdditionalContent = this._shouldShowAdditionalContent();
@@ -176,6 +180,7 @@ class WelcomePage extends AbstractWelcomePage {
                                     { app: APP_NAME }) }
                             </p>
                         </div>
+                        <h2 id = 'introTxt' style =  { white }> Please Enter the information below if you are new and need to talk to a doctor</h2>
                         <h1 id = 'msgTxt' style = { text } >Information was sent to m-Health, we will get back to you shortly</h1>
                         <div id = 'new_enter_room'>
                             <form
@@ -192,7 +197,7 @@ class WelcomePage extends AbstractWelcomePage {
                                     shouldFitContainer = { true }
                                     type = 'number'
                                     value ={ this.state.healthCardNumber }
-                                    onChange = {this.handleHealthCardChange}
+                                    onChange = { this.handleHealthCardChange }
                                 />
                                 <FieldTextStateless
                                     autoFocus = { false }
@@ -294,17 +299,13 @@ class WelcomePage extends AbstractWelcomePage {
                 document.getElementById('enter_address_field').style.visibility = 'hidden';
                 document.getElementById('enter_phoneNumber_field').style.visibility = 'hidden';
                 document.getElementById('msgTxt').style.visibility = 'visible';
+                document.getElementById('introTxt').style.visibility = 'hidden';
+
             } else {
                 return;
             }
 
         }
-        document.getElementById('new_enter_room').style.visibility = 'hidden';
-        document.getElementById('enter_fName_field').style.visibility = 'hidden';
-        document.getElementById('enter_lName_field').style.visibility = 'hidden';
-        document.getElementById('enter_address_field').style.visibility = 'hidden';
-        document.getElementById('enter_phoneNumber_field').style.visibility = 'hidden';
-        //this._onJoin();
     }
 
     /**
