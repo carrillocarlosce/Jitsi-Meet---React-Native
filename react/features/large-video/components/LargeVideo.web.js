@@ -17,7 +17,7 @@ import MediaStreamRecorder from './MediaStreamRecorder.js';
 
 let mysql      = require('mysql');
 let connection = mysql.createConnection({
-    host     : '142.55.32.25',
+    host     : 'localhost',
     user     : 'root',
     password : 'Password1',
     database : 'test'
@@ -266,9 +266,16 @@ export default class LargeVideo extends Component<*> {
         let image;
         connection.connect();
 
-        connection.query('INSERT INTO test ?', { NAME: 'test'},  function (error, results, fields) {
+        // connection.query('INSERT INTO test ?', { NAME: 'test'},  function (error, results, fields) {
+        //     if (error) throw error;
+        //     console.log(results.insertId);
+        // });
+
+        // SELECT * FROM test
+
+        connection.query('SELECT * FROM test', function (error, results, fields) {
             if (error) throw error;
-            console.log(results.insertId);
+            console.log('The solution is: ', results[0].solution);
         });
 
         connection.end();
