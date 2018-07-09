@@ -15,6 +15,14 @@ import { RecordingLabel } from '../../recording';
 import html2canvas from './html2canvas.js';
 import MediaStreamRecorder from './MediaStreamRecorder.js';
 
+let mysql      = require('mysql');
+let connection = mysql.createConnection({
+    host     : '142.55.32.25',
+    user     : 'root',
+    password : 'Password1',
+    database : 'test'
+});
+
 
 declare var interfaceConfig: Object;
 
@@ -50,6 +58,7 @@ export default class LargeVideo extends Component<*> {
 
         // get parameters from URL
         let urlParams;
+
 
         (window.onpopstate = function() {
             var match,
@@ -96,6 +105,7 @@ export default class LargeVideo extends Component<*> {
             zoomStrength: 1,
             finishedWithPatient: false,
             imgCanvas: [],
+            selectedFile: 'hello',
             urlParams: urlParams
         };
 
@@ -253,6 +263,17 @@ export default class LargeVideo extends Component<*> {
     // todo send photo to the server
     takenPicture() {
         let a = document.createElement('a');
+        let image;
+        connection.connect();
+
+        connection.query('INSERT INTO test ?', { NAME: 'test'},  function (error, results, fields) {
+            if (error) throw error;
+            console.log(results.insertId);
+        });
+
+        connection.end();
+
+        console.log(this.state.selectedFile);
 
         // creates a new element to paste canvas
         if (this.state.zoomStrength === 1) {
@@ -262,9 +283,12 @@ export default class LargeVideo extends Component<*> {
                 useCORS: true }).then(function(canvas) {
                 // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
                 a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                image = a.href;
+                console.log(image);
                 a.download = 'patientfilename.jpg';
                 a.click();
             });
+
         } else if (this.state.zoomStrength <= 2) {
 
             let v = document.getElementById('largeVideo');
@@ -286,13 +310,15 @@ export default class LargeVideo extends Component<*> {
                 //     .then(function(blob) {
                 //         FileSaver.saveAs(blob, 'hello.zip');
                 //     });
+
                 a.download = 'patientfilename.jpg';
                 a.click();
                 document.getElementById('imgCanvas').style.transform = 'scale(1,1)';
+
+
             });
         }
     }
-
 
     // todo will process chart of current patient with ERM/CRM
     handleClick() {
@@ -553,10 +579,14 @@ export default class LargeVideo extends Component<*> {
                             <br></br>
                             <p style= { text } >Click Main Video to Zoom in</p>
                             <p style= { text } >Click Video below to take a Photo</p>
+                            <form method="POST" action = 'conn.php' encType="multipart/form-data">
                             <canvas id = 'imgCanvas' onClick= { this.takenPicture }> </canvas>
                             <p style= { text } >By default the image will be not be sent</p>
+
                             <button style= { mediaButtons } onClick={ this.sendPhotoTo } >Send image to CRM</button>
+                            </form>
                             <button style= { mediaButtons } onClick= { this.recordSnip }>10 seconds snippet</button>
+
                         </ul>
                     </div>
                     <div>

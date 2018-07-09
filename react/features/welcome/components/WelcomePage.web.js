@@ -110,28 +110,28 @@ class WelcomePage extends AbstractWelcomePage {
         this.setState({
             healthCardNumber: e.target.value
         });
-    }
+    };
 
     handleFirstNameChange = (e) => {
         this.setState({
             fName: e.target.value
         });
-    }
+    };
     handleLastNameChange = (e) => {
         this.setState({
             lName: e.target.value
         });
-    }
+    };
     handleAddressChange = (e) => {
         this.setState({
             address: e.target.value
         });
-    }
+    };
     handlePhoneNumberChange = (e) => {
         this.setState({
             phoneNumber: e.target.value
         });
-    }
+    };
 
     /**
      * Implements React's {@link Component#render()}.

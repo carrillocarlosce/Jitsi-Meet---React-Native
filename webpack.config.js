@@ -24,6 +24,7 @@ const plugins = [
     })
 ];
 
+
 if (minimize) {
     // XXX Webpack's command line argument -p is not enough. Further
     // optimizations are made possible by the use of DefinePlugin and NODE_ENV
@@ -108,7 +109,11 @@ const config = {
         // Allow the use of the real filename of the module being executed. By
         // default Webpack does not leak path-related information and provides a
         // value that is a mock (/index.js).
-        __filename: true
+        __filename: true,
+        console: true,
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
     },
     output: {
         filename: `[name]${minimize ? '.min' : ''}.js`,
