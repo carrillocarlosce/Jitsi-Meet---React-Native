@@ -24,7 +24,6 @@ const plugins = [
     })
 ];
 
-
 if (minimize) {
     // XXX Webpack's command line argument -p is not enough. Further
     // optimizations are made possible by the use of DefinePlugin and NODE_ENV
@@ -110,7 +109,7 @@ const config = {
         // default Webpack does not leak path-related information and provides a
         // value that is a mock (/index.js).
         __filename: true,
-        console: true,
+        console: false,
         fs: 'empty',
         net: 'empty',
         tls: 'empty'

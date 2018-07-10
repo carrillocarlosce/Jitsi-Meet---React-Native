@@ -8,20 +8,14 @@ import React, { Component } from 'react';
 
 let JSZip = require('jszip');
 let FileSaver = require('file-saver');
+let mysql = require('mysql');
+
 
 import { VideoQualityLabel } from '../../video-quality';
 import { RecordingLabel } from '../../recording';
 
 import html2canvas from './html2canvas.js';
 import MediaStreamRecorder from './MediaStreamRecorder.js';
-
-let mysql      = require('mysql');
-let connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'Password1',
-    database : 'test'
-});
 
 
 declare var interfaceConfig: Object;
@@ -58,6 +52,17 @@ export default class LargeVideo extends Component<*> {
 
         // get parameters from URL
         let urlParams;
+
+        var con = mysql.createConnection({
+            host: "onor-mhealth-serv.database.windows.net:1433",
+            user: "madmin",
+            password: "lunchtime.123"
+        });
+
+        con.connect(function(err) {
+            if (err) throw err;
+            console.log("Connected!");
+        });
 
 
         (window.onpopstate = function() {
@@ -264,23 +269,19 @@ export default class LargeVideo extends Component<*> {
     takenPicture() {
         let a = document.createElement('a');
         let image;
-        connection.connect();
-
-        // connection.query('INSERT INTO test ?', { NAME: 'test'},  function (error, results, fields) {
-        //     if (error) throw error;
-        //     console.log(results.insertId);
-        // });
-
-        // SELECT * FROM test
-
-        connection.query('SELECT * FROM test', function (error, results, fields) {
-            if (error) throw error;
-            console.log('The solution is: ', results[0].solution);
-        });
-
-        connection.end();
 
         console.log(this.state.selectedFile);
+
+        var con = mysql.createConnection({
+            host: "142.55.32.25",
+            user: "root",
+            password: "Password1"
+        });
+
+        con.connect(function(err) {
+            if (err) throw err;
+            console.log("Connected!");
+        });
 
         // creates a new element to paste canvas
         if (this.state.zoomStrength === 1) {
