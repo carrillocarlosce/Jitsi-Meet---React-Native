@@ -52,17 +52,17 @@ export default class LargeVideo extends Component<*> {
 
         // get parameters from URL
         let urlParams;
-
-        var con = mysql.createConnection({
-            host: "onor-mhealth-serv.database.windows.net:1433",
-            user: "madmin",
-            password: "lunchtime.123"
-        });
-
-        con.connect(function(err) {
-            if (err) throw err;
-            console.log("Connected!");
-        });
+        //
+        // var con = mysql.createConnection({
+        //     host: "onor-mhealth-serv.database.windows.net",
+        //     user: "madmin",
+        //     password: "lunchtime.123"
+        // });
+        //
+        // con.connect(function(err) {
+        //     if (err) throw err;
+        //     console.log("Connected!");
+        // });
 
 
         (window.onpopstate = function() {
