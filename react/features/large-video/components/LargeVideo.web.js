@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 let JSZip = require('jszip');
 let FileSaver = require('file-saver');
 let mysql = require('mysql');
+let builder = require('xmlbuilder');
 
 
 import { VideoQualityLabel } from '../../video-quality';
@@ -52,7 +53,7 @@ export default class LargeVideo extends Component<*> {
 
         // get parameters from URL
         let urlParams;
-        //
+
         // var con = mysql.createConnection({
         //     host: "onor-mhealth-serv.database.windows.net",
         //     user: "madmin",
@@ -63,6 +64,8 @@ export default class LargeVideo extends Component<*> {
         //     if (err) throw err;
         //     console.log("Connected!");
         // });
+
+
 
 
         (window.onpopstate = function() {
@@ -93,8 +96,10 @@ export default class LargeVideo extends Component<*> {
         this.state = {
             pictures: [],
             patientID: [],
+            nameP: [],
             names: [],
             button: [],
+            conferenceID:[ 'Not Available'] ,
             chiefcomplaint: [ 'Not Available' ],
             allergies: [ 'Not Available' ],
             medication: [ 'Not Available' ],
@@ -130,6 +135,12 @@ export default class LargeVideo extends Component<*> {
         }
         if (this.state.urlParams.reminders !== undefined) {
             this.state.reminders = this.state.urlParams.reminders;
+        }
+        if (this.state.urlParams.conferenceId !== undefined) {
+            this.state.conferenceID = this.state.urlParams.conferenceId;
+        }
+        if (this.state.urlParams.fname !== undefined) {
+            this.state.nameP = this.state.urlParams.fname + ' ' + this.state.urlParams.lname;
         }
 
         // sets state to largeVideo
@@ -205,7 +216,7 @@ export default class LargeVideo extends Component<*> {
                 return (
 // eslint-disable-next-line react/jsx-key
                     <div>
-                        <p> {this.state.urlParams.firstName}, {this.state.urlParams.lastName} </p>
+                        <p> {this.state.urlParams.name} </p>
                         {/*<p> {first.name.first}, {first.name.last} </p>*/}
                     </div>
                 );
@@ -216,16 +227,19 @@ export default class LargeVideo extends Component<*> {
                 return (
 // eslint-disable-next-line react/jsx-key
                     <div>
-                        <p>{this.state.urlParams.patientID}</p>
+                        <p>{this.state.urlParams.pId}</p>
                         {/*<h2 > { patientID.id.value} </h2>*/}
                     </div>
                 );
             });
 
+
             // sets the state to access variables from anywhere in the code
             this.setState({ pictures: pictures });
             this.setState({ names: names });
             this.setState({ patientID: patientId });
+
+            console.log(this.state.conferenceID);
 
 
             let buttons = data.results.slice(1).map((first) => {
@@ -272,16 +286,6 @@ export default class LargeVideo extends Component<*> {
 
         console.log(this.state.selectedFile);
 
-        var con = mysql.createConnection({
-            host: "142.55.32.25",
-            user: "root",
-            password: "Password1"
-        });
-
-        con.connect(function(err) {
-            if (err) throw err;
-            console.log("Connected!");
-        });
 
         // creates a new element to paste canvas
         if (this.state.zoomStrength === 1) {
@@ -446,6 +450,28 @@ export default class LargeVideo extends Component<*> {
         if (this.state.finishedWithPatient === true) {
             this.recordCall();
 
+            let cID = this.state.conferenceID.toString();
+
+
+            var xml = builder.create(cID)
+                .ele('Media')
+                    .ele('Photo(s)', {'type': 'jpeg'}, 'URL to database link').up()
+                    .ele('Video', {'type': 'mp4'}, 'URL to database link').up()
+                    .ele('Snippet(s)', {'type': 'mp4'}, 'URL to database link').up()
+                .end({ pretty: true});
+
+            console.log(xml);
+
+            var url=' https://reqres.in/api/users/2';
+                $.ajax({
+                    url: url,
+                    dataType:'json',
+                    success: function(data){
+                        alert('Success');
+                    },
+                    error:function(xhr, textStatus, errorThrown){console.log(errorThrown)}
+                });
+
             document.getElementById('changeRoom').style.visibility = 'visible';
             document.getElementById('finishButton').style.visibility = 'hidden';
             document.getElementById('finishForm').style.visibility = 'hidden';
@@ -543,10 +569,8 @@ export default class LargeVideo extends Component<*> {
                         <p id ='today'>{this.state.date}</p>
                         <h3 style= { text } >Patient ID:</h3>
                         <p id ='patientID'>{this.state.patientID[0]}</p>
-                        <h3 style= { text } >Allergies:</h3>
-                        <p id ='allergies'>{this.state.allergies}</p>
-                        <h3 style= { text }>Current Medication:</h3>
-                        <p id ='medication'>{this.state.medication}</p>
+                        <h3 style= { text } >Conference ID:</h3>
+                        <p id ='allergies'>{this.state.conferenceID}</p>
                         <h3 style= { text } >Patient Chart:</h3>
                         <button style = { patientChart } type='button' value='clickme' onClick= { this.handleClick } >{this.state.names[0]}'s Chart
                         </button>
@@ -664,23 +688,13 @@ export default class LargeVideo extends Component<*> {
                         <br></br>
                         <h2>First/Last Name:</h2>
                         <br></br>
-                        <p id='fName'>{this.state.names[0]}</p>
+                        <p id='fName'>{this.state.nameP}</p>
                         {this.state.pictures[0]}
-                        <h2>Chief Complaint:</h2>
-                        <br></br>
-                        <p id='chiefComplaint'>{this.state.chiefcomplaint}</p>
                         <h4>Date:</h4>
                         <br></br>
                         <p id='today'>{this.state.date}</p>
-                        <h2>Patient ID:</h2>
-                        <p id='patientID'>{this.state.patientID[0]}</p>
-                        <h2>Allergies:</h2>
-                        <p id='allergies'>{this.state.allergies}</p>
-                        <h2>Current Medication:</h2>
-                        <p id='medication'>{this.state.medication}</p>
-                        <h2>Patient Chart:</h2>
-                        <button type='button' value='clickme' onClick={this.handleClick}>{this.state.names[0]} Chart
-                        </button>
+                        <h2>Conference ID:</h2>
+                        <p id='patientID'>{this.state.conferenceID}</p>
                         <br></br>
                         <br></br>
                         <p>This session is one time only, meaning the link will not work</p>
