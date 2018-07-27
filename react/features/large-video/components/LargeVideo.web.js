@@ -45,7 +45,6 @@ export default class LargeVideo extends Component<*> {
         this.recordSnip = this.recordSnip.bind(this);
         this.recordCall = this.recordCall.bind(this);
         this.onMediaError = this.onMediaError.bind(this);
-        this.sendPhotoTo = this.sendPhotoTo.bind(this);
         this.zoomWebcam = this.zoomWebcam.bind(this);
         this.onFinishWithPatient = this.onFinishWithPatient.bind(this);
         this.mHealth = this.mHealth.bind(this);
@@ -452,11 +451,6 @@ export default class LargeVideo extends Component<*> {
     // checks for a media error
     onMediaError(e) {
         console.error('media error', e);
-    }
-
-    // sends photo to server
-    sendPhotoTo() {
-        alert('Photo will be sent to the server');
     }
 
     // will zoom in the main video up 5x and will reset it after the 4th click
