@@ -41,7 +41,6 @@ export default class LargeVideo extends Component<*> {
         // declare functions for page
         this.handleClick = this.handleClick.bind(this);
         this.handleRoomChange = this.handleRoomChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.takenPicture = this.takenPicture.bind(this);
         this.recordSnip = this.recordSnip.bind(this);
         this.recordCall = this.recordCall.bind(this);
@@ -54,23 +53,9 @@ export default class LargeVideo extends Component<*> {
         // get parameters from URL
         let urlParams;
 
-        // var con = mysql.createConnection({
-        //     host: "onor-mhealth-serv.database.windows.net",
-        //     user: "madmin",
-        //     password: "lunchtime.123"
-        // });
-        //
-        // con.connect(function(err) {
-        //     if (err) throw err;
-        //     console.log("Connected!");
-        // });
-
-
-
-
         (window.onpopstate = function() {
             var match,
-                pl     = /\+/g,  // Regex for replacing addition symbol with a space
+                pl     = /\+/g, //Regex for replacing addition symbol with a space
                 search = /([^&=]+)=?([^&]*)/g,
                 decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
                 query  = window.location.search.substring(1);
@@ -89,7 +74,6 @@ export default class LargeVideo extends Component<*> {
             audio: true,
             video: true
         };
-
 
         // state variables
         // todo set up medication, allergies, reminders through the api
@@ -148,9 +132,6 @@ export default class LargeVideo extends Component<*> {
             $('#videospace').animate({
                 width: '50%'
             });
-
-            //alert("This call will be recorded");
-
             document.getElementById('largeVideoWrapper').style.width = '50%';
             this.state.zoomCanvas = document.getElementById('largeVideo');
 
@@ -169,6 +150,7 @@ export default class LargeVideo extends Component<*> {
             }, false);
 
             setTimeout(this.recordCall(), 1000);
+
         } else if (this.state.urlParams.patient === 'true') {
             let consent = false;
             while (consent === false) {
@@ -192,11 +174,9 @@ export default class LargeVideo extends Component<*> {
             $('#videospace').animate({
                 width: '70%'
             });
-            //alert('Please schedule an appointment with your doctor');
-
         }
 
-        //code to get information from either json or link parameters
+        // code to get information from either json or link parameters
         fetch('https://randomuser.me/api/?results=7').then(results => {
             return results.json();
         }).then(data => {
@@ -217,7 +197,6 @@ export default class LargeVideo extends Component<*> {
 // eslint-disable-next-line react/jsx-key
                     <div>
                         <p> {this.state.urlParams.name} </p>
-                        {/*<p> {first.name.first}, {first.name.last} </p>*/}
                     </div>
                 );
             });
@@ -228,7 +207,6 @@ export default class LargeVideo extends Component<*> {
 // eslint-disable-next-line react/jsx-key
                     <div>
                         <p>{this.state.urlParams.pId}</p>
-                        {/*<h2 > { patientID.id.value} </h2>*/}
                     </div>
                 );
             });
@@ -346,18 +324,6 @@ export default class LargeVideo extends Component<*> {
         }
     }
 
-    // todo post notes to server
-    handleSubmit() {
-        alert('hello');
-        // event.preventDefault();
-        // const data = new FormData(event.target);
-        //
-        // fetch('/api/form-submit-url', {
-        //     method: 'POST',
-        //     body: data
-        // });
-    }
-
     // records the call from the start
     // todo set up send to server when recording is finished
     // todo set up when doctor ends call, the recording will be sent to server
@@ -462,6 +428,7 @@ export default class LargeVideo extends Component<*> {
 
             console.log(xml);
 
+
             var url=' https://reqres.in/api/users/2';
                 $.ajax({
                     url: url,
@@ -512,10 +479,10 @@ export default class LargeVideo extends Component<*> {
         }
     }
 
+    // Open the web page of m-health
     mHealth() {
         let win = window.open('https://m-healthsolutions.com', '_blank');
         win.focus();
-
     }
 
     /**
@@ -614,11 +581,9 @@ export default class LargeVideo extends Component<*> {
                             <form method="POST" action = 'conn.php' encType="multipart/form-data">
                             <canvas id = 'imgCanvas' onClick= { this.takenPicture }> </canvas>
                             <p style= { text } >By default the image will be not be sent</p>
-
                             <button style= { mediaButtons } onClick={ this.sendPhotoTo } >Send image to CRM</button>
                             </form>
                             <button style= { mediaButtons } onClick= { this.recordSnip }>10 seconds snippet</button>
-
                         </ul>
                     </div>
                     <div>
@@ -671,6 +636,7 @@ export default class LargeVideo extends Component<*> {
                 </div>
             );
         } else if (this.state.urlParams.patient === 'true') {
+
             // Patient View
             return (
                 <div
@@ -735,7 +701,6 @@ export default class LargeVideo extends Component<*> {
                         ? null : <VideoQualityLabel />}
                     <RecordingLabel />
                 </div>
-
             );
         } else {
 
@@ -769,7 +734,6 @@ export default class LargeVideo extends Component<*> {
                     <div>
                         <div id='largeVideoBackgroundContainer' />
                         {
-
                             /**
                              * FIXME: the architecture of elements related to the
                              * large video and  the naming. The background is not
@@ -794,10 +758,7 @@ export default class LargeVideo extends Component<*> {
                         ? null : <VideoQualityLabel /> }
                     <RecordingLabel />
                 </div>
-
             );
-
-
         }
     }
 }
