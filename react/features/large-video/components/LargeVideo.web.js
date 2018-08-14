@@ -438,9 +438,9 @@ export default class LargeVideo extends Component<*> {
 
             var xml = builder.create(cID)
                 .ele('Media')
-                    .ele('Photo(s)', {'type': 'jpeg'}, 'URL to database link').up()
+                    .ele('Photos', {'type': 'jpeg'}, 'URL to database link').up()
                     .ele('Video', {'type': 'mp4'}, 'URL to database link').up()
-                    .ele('Snippet(s)', {'type': 'mp4'}, 'URL to database link').up()
+                    .ele('Snippet', {'type': 'mp4'}, 'URL to database link').up()
                 .end({ pretty: true});
 
             console.log(xml);
@@ -595,6 +595,14 @@ export default class LargeVideo extends Component<*> {
                         <br></br>
                         <br></br>
                         <button style= { patientChart } id = 'finishButton' onClick={this.onFinishWithPatient}> Click me when youre finished with the patient </button>
+                        <form ref='uploadForm'
+                              id='uploadForm'
+                              action='http://localhost:8081/upload'
+                              method='post'
+                              encType="multipart/form-data">
+                            <input type="file" name="sampleFile" />
+                            <input type='submit' value='Upload!' />
+                        </form>
                     </div>
                     <div>
                         <ul  ref='reminder' id='reminder'>
