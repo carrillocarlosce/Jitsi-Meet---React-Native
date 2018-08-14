@@ -78,11 +78,11 @@ export default class LargeVideo extends Component<*> {
         // todo set up medication, allergies, reminders through the api
         this.state = {
             pictures: [],
-            patientID: [],
+            patientID: [ 'Not Available' ],
             nameP: [],
             names: [],
             button: [],
-            conferenceID:[ 'Not Available'] ,
+            conferenceID:[ 'Not Available' ],
             chiefcomplaint: [ 'Not Available' ],
             allergies: [ 'Not Available' ],
             medication: [ 'Not Available' ],
@@ -218,7 +218,7 @@ export default class LargeVideo extends Component<*> {
 
             console.log(this.state.conferenceID);
 
-
+            // css for buttons
             let buttons = data.results.slice(1).map((first) => {
                 let mediaButtons = {
                     width: '100%',
@@ -273,6 +273,21 @@ export default class LargeVideo extends Component<*> {
                 // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
                 a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
                 image = a.href;
+
+                var fd = new FormData();
+                fd.append('fname', 'test.jpeg');
+                fd.append('data', a);
+                $.ajax({
+                    type: 'POST',
+                    url: '/index.php',
+                    data: fd,
+                    processData: false,
+                    contentType: false
+                }).done(function(data) {
+                    console.log(data);
+                });
+
+
                 console.log(image);
                 a.download = 'patientfilename.jpg';
                 a.click();
@@ -299,6 +314,7 @@ export default class LargeVideo extends Component<*> {
                 //     .then(function(blob) {
                 //         FileSaver.saveAs(blob, 'hello.zip');
                 //     });
+
 
                 a.download = 'patientfilename.jpg';
                 a.click();
@@ -418,6 +434,8 @@ export default class LargeVideo extends Component<*> {
             let cID = this.state.conferenceID.toString();
 
 
+
+
             var xml = builder.create(cID)
                 .ele('Media')
                     .ele('Photo(s)', {'type': 'jpeg'}, 'URL to database link').up()
@@ -428,15 +446,33 @@ export default class LargeVideo extends Component<*> {
             console.log(xml);
 
 
-            var url=' https://reqres.in/api/users/2';
+            $(document).ready(function(){
+
+                var confID = cID;
+                var file=(xml).replace(new RegExp('\"', 'g'), '\\\"');//enter logic for ur xml file
+                console.log(file);
+                var url = "https://pcsservices.ca/ConferenceWebService/api/conference/"+confID;
+                console.log(url);
+                console.log(file);
+
                 $.ajax({
-                    url: url,
+                    url:url,
+                    contentType:'application/json',
                     dataType:'json',
-                    success: function(data){
-                        alert('Success');
+                    data: '"'+file+'"',
+                    type:'POST',
+                    xhrFields: {
+                        withCredentials: false
                     },
-                    error:function(xhr, textStatus, errorThrown){console.log(errorThrown)}
+                    success:function(data, textStatus, jQxhr){
+                        alert('Conference files saved successfully!');
+                    },
+                    error:function(xhr, textStatus, errorThrown){
+                        console.log("Error saving conference file: "+errorThrown);
+                        alert("Error saving conference file: "+errorThrown);
+                    }
                 });
+            });
 
             document.getElementById('changeRoom').style.visibility = 'visible';
             document.getElementById('finishButton').style.visibility = 'hidden';
