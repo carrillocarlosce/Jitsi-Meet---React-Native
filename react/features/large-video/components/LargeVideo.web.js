@@ -10,6 +10,7 @@ let JSZip = require('jszip');
 let FileSaver = require('file-saver');
 let mysql = require('mysql');
 let builder = require('xmlbuilder');
+let request = require('request');
 
 
 import { VideoQualityLabel } from '../../video-quality';
@@ -261,6 +262,26 @@ export default class LargeVideo extends Component<*> {
         let a = document.createElement('a');
         let image;
 
+        var d = new Date();
+        var n = d.getTime();
+
+
+        let url = 'http://localhost:8081/uploadPhoto';
+        let cID = this.state.conferenceID.toString();
+        let place = '/media/photo/' + cID + n;
+
+        console.log(place)
+
+        request.post(
+            'http://localhost:8081/uploadPhoto',
+            { json: { cid: cID, place: place } },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log(body);
+                }
+            }
+        );
+
         console.log(this.state.selectedFile);
 
 
@@ -274,18 +295,7 @@ export default class LargeVideo extends Component<*> {
                 a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
                 image = a.href;
 
-                var fd = new FormData();
-                fd.append('fname', 'test.jpeg');
-                fd.append('data', a);
-                $.ajax({
-                    type: 'POST',
-                    url: '/index.php',
-                    data: fd,
-                    processData: false,
-                    contentType: false
-                }).done(function(data) {
-                    console.log(data);
-                });
+
 
 
                 console.log(image);
@@ -315,8 +325,8 @@ export default class LargeVideo extends Component<*> {
                 //         FileSaver.saveAs(blob, 'hello.zip');
                 //     });
 
-
-                a.download = 'patientfilename.jpg';
+                let cID = this.state.conferenceID.toString();
+                a.download = cID + '.jpg';
                 a.click();
                 document.getElementById('imgCanvas').style.transform = 'scale(1,1)';
 
@@ -373,9 +383,26 @@ export default class LargeVideo extends Component<*> {
                 //     .then(function(blob) {
                 //         FileSaver.saveAs(blob, 'hello.zip');
                 //     });
-                let blobURL = URL.createObjectURL(blob);
-                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
-                console.log('------------------ Video sent to Database ------------------------');
+                var d = new Date();
+                var n = d.getTime();
+
+
+                let url = 'http://localhost:8081/uploadPhoto'
+                let cID = this.state.conferenceID.toString();
+                let place = '/media/snippet/' + cID + n
+
+                console.log(place)
+
+                request.post(
+                    'http://localhost:8081/uploadPhoto',
+                    { json: { cid: cID, place: place } },
+                    function (error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            console.log(body);
+                        }
+                    }
+                );
+
             };
     }
 
@@ -595,14 +622,6 @@ export default class LargeVideo extends Component<*> {
                         <br></br>
                         <br></br>
                         <button style= { patientChart } id = 'finishButton' onClick={this.onFinishWithPatient}> Click me when youre finished with the patient </button>
-                        <form ref='uploadForm'
-                              id='uploadForm'
-                              action='http://localhost:8081/upload'
-                              method='post'
-                              encType="multipart/form-data">
-                            <input type="file" name="sampleFile" />
-                            <input type='submit' value='Upload!' />
-                        </form>
                     </div>
                     <div>
                         <ul  ref='reminder' id='reminder'>

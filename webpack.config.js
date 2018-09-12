@@ -135,10 +135,13 @@ const config = {
             '.js',
             '.json'
         ]
+
     }
 };
 
 module.exports = [
+
+
     Object.assign({}, config, {
         entry: {
             'app.bundle': [
@@ -166,11 +169,11 @@ module.exports = [
 
                 './react/features/invite/components/dial-in-info-page'
             ],
-
             'do_external_connect':
                 './connection_optimization/do_external_connect.js'
         }
     }),
+
 
     // The Webpack configuration to bundle external_api.js (aka
     // JitsiMeetExternalAPI).
@@ -186,9 +189,10 @@ module.exports = [
         output: Object.assign({}, config.output, {
             library: 'JitsiMeetExternalAPI',
             libraryTarget: 'umd'
-        })
+        }),
     })
 ];
+
 
 /**
  * Determines whether a specific (HTTP) request is to bypass the proxy of
@@ -234,3 +238,4 @@ function devServerProxyBypass({ path }) {
 
     /* eslint-enable array-callback-return, indent */
 }
+
