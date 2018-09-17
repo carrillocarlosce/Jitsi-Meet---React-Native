@@ -266,21 +266,8 @@ export default class LargeVideo extends Component<*> {
         var n = d.getTime();
 
 
-        let url = 'http://localhost:8081/uploadPhoto';
         let cID = this.state.conferenceID.toString();
-        let place = '/media/photo/' + cID + n;
 
-        console.log(place)
-
-        request.post(
-            'http://localhost:8081/uploadPhoto',
-            { json: { cid: cID, place: place } },
-            function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(body);
-                }
-            }
-        );
 
         console.log(this.state.selectedFile);
 
@@ -297,7 +284,22 @@ export default class LargeVideo extends Component<*> {
 
 
 
+                var formData = new FormData();
+                formData.append("Patient" + cID, image);
 
+                $.ajax({
+                    url: "http://142.55.32.25:8081/upload",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log("success");
+                    },
+                    error: function(jqXHR, textStatus, errorMessage) {
+                        console.log(errorMessage); // Optional
+                    }
+                });
                 console.log(image);
                 a.download = 'patientfilename.jpg';
                 a.click();
