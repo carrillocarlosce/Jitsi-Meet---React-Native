@@ -602,23 +602,15 @@ export default class LargeVideo extends Component<*> {
                         <form onSubmit = { this.handleSubmit }>
                             <textarea style = { overflow } rows="4" cols="35" id="doctorCallNotes"></textarea>
                         </form>
-                        {/*<h3 id = 'finishLabel' style= { text } >Finished with Patient</h3>*/}
-                        {/*<form id = 'finishForm'>*/}
-                            {/*<p style={ text }> What would you like to send to the server?:</p>*/}
-                            {/*<label style={ text } >*/}
-                                {/*Name*/}
-                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /><br></br>*/}
-                                {/*Notes*/}
-                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
-                                {/*Medical Record*/}
-                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
-                                {/*Video*/}
-                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
-                                {/*Nothing*/}
-                                {/*<input style= { checkBoxes } type="Checkbox" name="name" /> <br></br>*/}
-                            {/*</label>*/}
-                            {/*<br></br>*/}
-                        {/*</form>*/}
+
+                        <form ref='uploadForm'
+                              id='uploadForm'
+                              action='http://localhost:8000/upload'
+                              method='post'
+                              encType="multipart/form-data">
+                            <input type="file" name="sampleFile" />
+                            <input type='submit' value='Upload!' />
+                        </form>
                         <br></br>
                         <br></br>
                         <button style= { patientChart } id = 'finishButton' onClick={this.onFinishWithPatient}> Click me when youre finished with the patient </button>
@@ -635,11 +627,10 @@ export default class LargeVideo extends Component<*> {
                             <br></br>
                             <p style= { text } >Click Main Video to Zoom in</p>
                             <p style= { text } >Click Video below to take a Photo</p>
-                            <form method="POST" action = 'conn.php' encType="multipart/form-data">
+
                             <canvas id = 'imgCanvas' onClick= { this.takenPicture }> </canvas>
                             <p style= { text } >By default the image will be not be sent</p>
                             <button style= { mediaButtons } onClick={ this.sendPhotoTo } >Send image to CRM</button>
-                            </form>
                             <button style= { mediaButtons } onClick= { this.recordSnip }>10 seconds snippet</button>
                         </ul>
                     </div>

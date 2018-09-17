@@ -166,7 +166,7 @@ function _visitNode(node, callback) {
                 const htmlDocument
                     = new DOMParser().parseFromString(
                         `<html>
-                            <head><title>jitsi-meet</title></head>
+                            <head><title>m-Health</title></head>
                             <body></body>
                         </html>`,
                         'text/xml');
