@@ -288,7 +288,7 @@ export default class LargeVideo extends Component<*> {
                 formData.append("Patient" + cID, image);
 
                 $.ajax({
-                    url: "http://142.55.32.25:8081/upload",
+                    url: "https://142.55.32.25:8081/upload",
                     type: "POST",
                     data: formData,
                     processData: false,
