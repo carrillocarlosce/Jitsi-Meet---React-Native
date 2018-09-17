@@ -605,7 +605,7 @@ export default class LargeVideo extends Component<*> {
 
                         <form ref='uploadForm'
                               id='uploadForm'
-                              action='http://localhost:8081/upload'
+                              action='http://142.55.32.25:8081:8081/upload'
                               method='post'
                               encType="multipart/form-data">
                             <input type="file" name="sampleFile" />
