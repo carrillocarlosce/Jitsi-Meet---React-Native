@@ -83,7 +83,7 @@ export default class LargeVideo extends Component<*> {
             nameP: [],
             names: [],
             button: [],
-            conferenceID:[ 'Not Available' ],
+            conferenceID: [ 'Not Available' ],
             chiefcomplaint: [ 'Not Available' ],
             allergies: [ 'Not Available' ],
             medication: [ 'Not Available' ],
@@ -217,7 +217,6 @@ export default class LargeVideo extends Component<*> {
             this.setState({ names: names });
             this.setState({ patientID: patientId });
 
-            console.log(this.state.conferenceID);
 
             // css for buttons
             let buttons = data.results.slice(1).map((first) => {
@@ -232,7 +231,6 @@ export default class LargeVideo extends Component<*> {
                 };
 
                 return (
-
 // eslint-disable-next-line react/jsx-key
                     <div>
                         <p> {first.name.first}, {first.name.last} </p>
@@ -243,7 +241,6 @@ export default class LargeVideo extends Component<*> {
 
                 );
             });
-
             this.setState({ button: buttons });
         });
     }
@@ -263,13 +260,12 @@ export default class LargeVideo extends Component<*> {
         let image;
 
         var d = new Date();
-        var n = d.getTime();
+        var f = d.getDate()
+
 
 
         let cID = this.state.conferenceID.toString();
 
-
-        console.log(this.state.selectedFile);
 
 
         // creates a new element to paste canvas
@@ -283,7 +279,7 @@ export default class LargeVideo extends Component<*> {
                 image = a.href;
 
                 var formData = new FormData();
-                formData.append("Patient" + cID, image);
+                formData.append("sampleImage", image);
 
                 $.ajax({
                     url: "http://142.55.32.25:8081/upload",
@@ -299,7 +295,7 @@ export default class LargeVideo extends Component<*> {
                     }
                 });
                 console.log(image);
-                a.download = 'patientfilename.jpg';
+                a.download = cID + d + '.jpg';
                 a.click();
             });
 
@@ -326,7 +322,7 @@ export default class LargeVideo extends Component<*> {
                 //     });
 
                 let cID = this.state.conferenceID.toString();
-                a.download = cID + '.jpg';
+                a.download = cID + f + '.jpg';
                 a.click();
                 document.getElementById('imgCanvas').style.transform = 'scale(1,1)';
 
@@ -357,7 +353,6 @@ export default class LargeVideo extends Component<*> {
         // checks to see if recording is started
             let stream;
             let video = document.getElementById('largeVideo');
-
             if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
                 // Do Firefox-related activities
                 stream = this.state.imgCanvas.captureStream();
@@ -366,10 +361,12 @@ export default class LargeVideo extends Component<*> {
                 stream = video.captureStream();
                 console.log('chrome');
             }
+
             console.log('------------------ Recording Snippet ------------------------');
+
             let mediaRecorder = new MediaStreamRecorder(stream);
             this.state.snippetRecorder = mediaRecorder;
-
+            this.state.snippetRecorder.mediaConstraints = this.state.mediaConstraints;
             // type of video being recorded
             this.state.snippetRecorder.mimeType = 'video/webm';
 
@@ -383,28 +380,14 @@ export default class LargeVideo extends Component<*> {
                 //     .then(function(blob) {
                 //         FileSaver.saveAs(blob, 'hello.zip');
                 //     });
-                var d = new Date();
-                var n = d.getTime();
-
-
-                let url = 'http://localhost:8081/uploadPhoto'
-                let cID = this.state.conferenceID.toString();
-                let place = '/media/snippet/' + cID + n
-
-                console.log(place)
-
-                request.post(
-                    'http://localhost:8081/uploadPhoto',
-                    { json: { cid: cID, place: place } },
-                    function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            console.log(body);
-                        }
-                    }
-                );
-
+                // var d = new Date();
+                // var n = d.getTime();
+                let blobURL = URL.createObjectURL(blob);
+                video.src = blobURL;
+                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
             };
     }
+
 
     recordCall() {
         if (this.state.recording === false) {
@@ -429,19 +412,21 @@ export default class LargeVideo extends Component<*> {
             this.state.mediaRecorder = mediaRecorder;
 
             // type of video being recorded
+            this.state.snippetRecorder.mediaConstraints = this.state.mediaConstraints;
             this.state.mediaRecorder.mimeType = 'video/webm';
 
             this.state.mediaRecorder.start(61000*30);
 
-            this.state.mediaRecorder.ondataavailable = function (blob) {
+            this.state.mediaRecorder.ondataavailable = function(blob) {
                 // POST/PUT "Blob" using FormData/XHR2
                 //let zip = new JSZip();
                 // zip.generateAsync({ type: 'blob' })
                 //     .then(function(blob) {
                 //         FileSaver.saveAs(blob, 'hello.zip');
                 //     });
-                // let blobURL = URL.createObjectURL(blob);
-                // document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
+                let blobURL = URL.createObjectURL(blob);
+                video.src = blobURL;
+                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
                 console.log('------------------ Video sent to Database ------------------------');
             };
             this.state.recording = false;
@@ -456,13 +441,7 @@ export default class LargeVideo extends Component<*> {
             this.state.finishedWithPatient = true;
         }
         if (this.state.finishedWithPatient === true) {
-            this.recordCall();
-
             let cID = this.state.conferenceID.toString();
-
-
-
-
             var xml = builder.create(cID)
                 .ele('Media')
                     .ele('Photos', {'type': 'jpeg'}, 'URL to database link').up()
@@ -470,7 +449,7 @@ export default class LargeVideo extends Component<*> {
                     .ele('Snippet', {'type': 'mp4'}, 'URL to database link').up()
                 .end({ pretty: true});
 
-            console.log(xml);
+            //console.log(xml);
 
 
             $(document).ready(function(){
@@ -492,7 +471,6 @@ export default class LargeVideo extends Component<*> {
                         withCredentials: false
                     },
                     success:function(data, textStatus, jQxhr){
-                        alert('Conference files saved successfully!');
                     },
                     error:function(xhr, textStatus, errorThrown){
                         console.log("Error saving conference file: "+errorThrown);
@@ -503,9 +481,11 @@ export default class LargeVideo extends Component<*> {
 
             document.getElementById('changeRoom').style.visibility = 'visible';
             document.getElementById('finishButton').style.visibility = 'hidden';
-            document.getElementById('finishForm').style.visibility = 'hidden';
-            document.getElementById('finishLabel').innerText = 'Select your next patient';
+            //document.getElementById('finishForm').style.visibility = 'hidden';
+            //document.getElementById('finishLabel').innerText = 'Select your next patient';
             alert('Information sent, when youre ready select next patient');
+            this.recordCall();
+
         } else {
             console.log('cancelled');
         }
@@ -549,7 +529,6 @@ export default class LargeVideo extends Component<*> {
      * @returns {ReactElement}
      */
     render() {
-
         // css elements
         let mediaButtons = {
             width: '100%',
@@ -571,6 +550,7 @@ export default class LargeVideo extends Component<*> {
         if (this.state.urlParams.patient === 'false') {
 
             return (
+                
                 // doctor view
                 <div
                     type='text/javascript' src='scripts/buttonClick.js'
@@ -603,14 +583,6 @@ export default class LargeVideo extends Component<*> {
                             <textarea style = { overflow } rows="4" cols="35" id="doctorCallNotes"></textarea>
                         </form>
 
-                        <form ref='uploadForm'
-                              id='uploadForm'
-                              action='http://142.55.32.25:8081/upload'
-                              method='post'
-                              encType="multipart/form-data">
-                            <input type="file" name="sampleFile" />
-                            <input type='submit' value='Upload!' />
-                        </form>
                         <br></br>
                         <br></br>
                         <button style= { patientChart } id = 'finishButton' onClick={this.onFinishWithPatient}> Click me when youre finished with the patient </button>
@@ -627,11 +599,20 @@ export default class LargeVideo extends Component<*> {
                             <br></br>
                             <p style= { text } >Click Main Video to Zoom in</p>
                             <p style= { text } >Click Video below to take a Photo</p>
-
                             <canvas id = 'imgCanvas' onClick= { this.takenPicture }> </canvas>
-                            <p style= { text } >By default the image will be not be sent</p>
-                            <button style= { mediaButtons } onClick={ this.sendPhotoTo } >Send image to CRM</button>
+                            <br></br>
+                            <br></br>
                             <button style= { mediaButtons } onClick= { this.recordSnip }>10 seconds snippet</button>
+                            <button style= { mediaButtons } onClick= { this.recordCall }>Stop Recording</button>
+                            <br></br>
+                            <form ref='uploadForm'
+                                  id='uploadForm'
+                                  action='http://142.55.32.25:8081/upload'
+                                  method='post'
+                                  encType="multipart/form-data">
+                                <input type="file" name="sampleFile" />
+                                <input type='submit' value='Upload!' />
+                            </form>
                         </ul>
                     </div>
                     <div>
