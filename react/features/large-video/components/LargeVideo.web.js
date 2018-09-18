@@ -282,13 +282,11 @@ export default class LargeVideo extends Component<*> {
                 a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
                 image = a.href;
 
-
-
                 var formData = new FormData();
                 formData.append("Patient" + cID, image);
 
                 $.ajax({
-                    url: "https://142.55.32.25:8081/upload",
+                    url: "http://142.55.32.25:8081/upload",
                     type: "POST",
                     data: formData,
                     processData: false,
