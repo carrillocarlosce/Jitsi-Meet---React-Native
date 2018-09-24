@@ -282,7 +282,7 @@ export default class LargeVideo extends Component<*> {
                 formData.append("sampleImage", image);
 
                 $.ajax({
-                    url: "http://142.55.32.25:8081/upload",
+                    url: "https://cmi.fast.sheridanc.on.ca:8443/upload",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -550,7 +550,7 @@ export default class LargeVideo extends Component<*> {
         if (this.state.urlParams.patient === 'false') {
 
             return (
-                
+
                 // doctor view
                 <div
                     type='text/javascript' src='scripts/buttonClick.js'
@@ -607,7 +607,7 @@ export default class LargeVideo extends Component<*> {
                             <br></br>
                             <form ref='uploadForm'
                                   id='uploadForm'
-                                  action='http://142.55.32.25:8081/upload'
+                                  action='https://cmi.fast.sheridanc.on.ca:8443/upload'
                                   method='post'
                                   encType="multipart/form-data">
                                 <input type="file" name="sampleFile" />
