@@ -279,7 +279,7 @@ export default class LargeVideo extends Component<*> {
                 image = a.href;
 
                 var formData = new FormData();
-                formData.append("sampleImage", image);
+                formData.append("sampleImage", a);
 
                 $.ajax({
                     url: "https://cmi.fast.sheridanc.on.ca:8443/upload",
