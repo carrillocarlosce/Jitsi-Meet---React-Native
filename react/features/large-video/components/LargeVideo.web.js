@@ -76,7 +76,6 @@ export default class LargeVideo extends Component<*> {
         };
 
         // state variables
-        // todo set up medication, allergies, reminders through the api
         this.state = {
             pictures: [],
             patientID: [ 'Not Available' ],
@@ -280,9 +279,10 @@ export default class LargeVideo extends Component<*> {
 
                 var formData = new FormData();
                 formData.append("sampleImage", a);
+                console.log(formData);
 
                 $.ajax({
-                    url: "https://cmi.fast.sheridanc.on.ca:8443/upload",
+                    url: "https://cmi.fast.sheridanc.on.ca:8080/upload",
                     type: "POST",
                     data: formData,
                     processData: false,
@@ -607,7 +607,8 @@ export default class LargeVideo extends Component<*> {
                             <br></br>
                             <form ref='uploadForm'
                                   id='uploadForm'
-                                  action='https://cmi.fast.sheridanc.on.ca:8443/upload'
+                                  action='https://cmi.fast.sheridanc.on.ca:8080/upload'
+
                                   method='post'
                                   encType="multipart/form-data">
                                 <input type="file" name="sampleFile" />
