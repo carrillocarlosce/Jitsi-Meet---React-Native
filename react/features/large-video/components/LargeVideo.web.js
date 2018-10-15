@@ -439,7 +439,10 @@ export default class LargeVideo extends Component<*> {
         console.log('------------------ Recording Call ------------------------');
         let mediaRecorder = new MediaStreamRecorder(stream);
         //this.state.snippetRecorder = mediaRecorder;
-        mediaRecorder.mediaConstraints = this.state.mediaConstraints;
+        mediaRecorder.mediaConstraints = {
+            audio: true,
+            video: false
+        };
         // type of video being recorded
         mediaRecorder.mimeType = 'video/mp4';
         mediaRecorder.start(61000);
