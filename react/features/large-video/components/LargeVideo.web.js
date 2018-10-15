@@ -546,6 +546,8 @@ export default class LargeVideo extends Component<*> {
 
         } else {
             console.log('cancelled');
+
+            
         }
     }
 

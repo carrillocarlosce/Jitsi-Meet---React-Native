@@ -53,7 +53,7 @@
     "jszip": "^3.1.5",
     "jwt-decode": "2.2.0",
     "lib-jitsi-meet": "github:jitsi/lib-jitsi-meet#39eea17e7e2f8ff4cc273239a6e73f2a149b96e2",
-    "lodash": "4.17.4",
+    "lodash": "^4.17.11",
     "moment": "2.19.4",
     "mysql": "^2.15.0",
     "postis": "2.2.0",
@@ -61,7 +61,7 @@
     "react": "16.2.0",
     "react-dom": "^16.2.0",
     "react-i18next": "4.8.0",
-    "react-native": "0.51.0",
+    "react-native": "^0.57.3",
     "react-native-background-timer": "2.0.0",
     "react-native-calendar-events": "1.4.3",
     "react-native-callstats": "3.27.0",
@@ -93,11 +93,11 @@
     "xmldom": "0.1.27"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
+    "babel-core": "^6.26.3",
     "babel-eslint": "8.0.3",
     "babel-loader": "7.1.2",
     "babel-polyfill": "6.26.0",
-    "babel-preset-env": "1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-1": "6.24.1",
     "clean-css": "3.4.25",
@@ -113,14 +113,14 @@
     "file-loader": "1.1.5",
     "flow-bin": "0.57.3",
     "imports-loader": "0.7.1",
-    "node-sass": "4.8.3",
+    "node-sass": "^4.9.4",
     "precommit-hook": "3.0.0",
     "string-replace-loader": "1.3.0",
     "style-loader": "0.19.0",
     "uglifyjs-webpack-plugin": "1.2.2",
-    "whatwg-fetch": "2.0.3",
     "webpack": "3.9.1",
-    "webpack-dev-server": "2.9.5"
+    "webpack-dev-server": "2.9.5",
+    "whatwg-fetch": "2.0.3"
   },
   "engines": {
     "node": ">=6.0.0"
