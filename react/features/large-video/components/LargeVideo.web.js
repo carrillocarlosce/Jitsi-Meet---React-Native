@@ -11,6 +11,7 @@ let FileSaver = require('file-saver');
 let mysql = require('mysql');
 let builder = require('xmlbuilder');
 let request = require('request');
+const blobToBase64 = require('blob-to-base64')
 
 
 import { VideoQualityLabel } from '../../video-quality';
@@ -18,8 +19,6 @@ import { RecordingLabel } from '../../recording';
 
 import html2canvas from './html2canvas.js';
 import MediaStreamRecorder from './MediaStreamRecorder.js';
-
-
 declare var interfaceConfig: Object;
 
 /**
@@ -52,6 +51,7 @@ export default class LargeVideo extends Component<*> {
 
         // get parameters from URL
         let urlParams;
+
 
         (window.onpopstate = function() {
             var match,
@@ -89,7 +89,7 @@ export default class LargeVideo extends Component<*> {
             reminders: [ 'Not Available' ],
             date: date,
             mediaConstraints: mediaConstraints,
-            recording: true,
+            recording: false,
             mediaRecorder: [],
             snippetRecorder: [],
             snippetDone: false,
@@ -147,8 +147,6 @@ export default class LargeVideo extends Component<*> {
                     ctx.drawImage(v, 0, 0, 300, 150);
                 }, 20);
             }, false);
-
-            setTimeout(this.recordCall(), 1000);
 
         } else if (this.state.urlParams.patient === 'true') {
             let consent = false;
@@ -217,6 +215,8 @@ export default class LargeVideo extends Component<*> {
             this.setState({ patientID: patientId });
 
 
+
+
             // css for buttons
             let buttons = data.results.slice(1).map((first) => {
                 let mediaButtons = {
@@ -275,18 +275,15 @@ export default class LargeVideo extends Component<*> {
                 useCORS: true }).then(function(canvas) {
                 // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
                 a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-                image = a.href;
-
-                var formData = new FormData();
-                formData.append("sampleImage", a);
-                console.log(formData);
-
                 $.ajax({
-                    url: "https://cmi.fast.sheridanc.on.ca:8080/upload",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
+                    url: "https://cmi.fast.sheridanc.on.ca:8080/uploadPhoto",
+                    type: 'POST',
+                    data: {
+                        image: a.href,
+                        cID: cID
+                },
+                    dataType: 'text',
+                    method: 'POST',
                     success: function(response) {
                         console.log("success");
                     },
@@ -294,9 +291,8 @@ export default class LargeVideo extends Component<*> {
                         console.log(errorMessage); // Optional
                     }
                 });
-                console.log(image);
-                a.download = cID + d + '.jpg';
-                a.click();
+                //a.download = cID + d + '.jpg';
+                //a.click();
             });
 
         } else if (this.state.zoomStrength <= 2) {
@@ -315,11 +311,22 @@ export default class LargeVideo extends Component<*> {
                 // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
                 a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
                 ctx.drawImage(v, 0, 0, 300, 150);
-                // let zip = new JSZip();
-                // zip.generateAsync({ type: 'blob' })
-                //     .then(function(blob) {
-                //         FileSaver.saveAs(blob, 'hello.zip');
-                //     });
+                $.ajax({
+                    url: "https://cmi.fast.sheridanc.on.ca:8080/uploadPhoto",
+                    type: 'POST',
+                    data: {
+                        image: a.href,
+                        cID: cID
+                    },
+                    dataType: 'text',
+                    method: 'POST',
+                    success: function(response) {
+                        console.log("success");
+                    },
+                    error: function(jqXHR, textStatus, errorMessage) {
+                        console.log(errorMessage); // Optional
+                    }
+                });
 
                 let cID = this.state.conferenceID.toString();
                 a.download = cID + f + '.jpg';
@@ -351,86 +358,134 @@ export default class LargeVideo extends Component<*> {
 
     recordSnip() {
         // checks to see if recording is started
-            let stream;
-            let video = document.getElementById('largeVideo');
-            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-                // Do Firefox-related activities
-                stream = this.state.imgCanvas.captureStream();
-                console.log('firefox');
-            } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-                stream = video.captureStream();
-                console.log('chrome');
+        let stream;
+        let cID = this.state.urlParams.conferenceId;
+        console.log(cID);
+        let video = document.getElementById('largeVideo');
+        if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            // Do Firefox-related activities
+            stream = this.state.imgCanvas.captureStream();
+            console.log('firefox');
+        } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            stream = video.captureStream();
+            console.log('chrome');
+        }
+        console.log('------------------ Recording Snippet ------------------------');
+        let mediaRecorder = new MediaStreamRecorder(stream);
+        //this.state.snippetRecorder = mediaRecorder;
+        mediaRecorder.mediaConstraints = this.state.mediaConstraints;
+        // type of video being recorded
+        mediaRecorder.mimeType = 'video/mp4';
+        mediaRecorder.start(11000);
+
+        console.log('recording for 10 seconds');
+
+        var number = 0;
+        mediaRecorder.ondataavailable = function(blob) {
+            if (number === 0){
+                number = 1;
+
+                blobToBase64(blob, function(error, base64) {
+                    if (!error) {
+                        $.ajax({
+                            url: "https://cmi.fast.sheridanc.on.ca:8080/uploadSnippet",
+                            type: 'POST',
+                            data: {
+                               snippet: base64,
+                               cID: cID
+                            },
+
+                            method: 'POST',
+                            dateType: 'text',
+                            success: function(response) {
+                                console.log("success");
+                            },
+                            error: function(jqXHR, textStatus, errorMessage) {
+                                console.log(errorMessage); // Optional
+                            }
+                        });
+                        console.log('------------------ Video sent to Database ------------------------');
+                    }
+                });
+            } else {
+                mediaRecorder.stop();
+                mediaRecorder.manuallyStopped;
             }
-
-            console.log('------------------ Recording Snippet ------------------------');
-
-            let mediaRecorder = new MediaStreamRecorder(stream);
-            this.state.snippetRecorder = mediaRecorder;
-            this.state.snippetRecorder.mediaConstraints = this.state.mediaConstraints;
-            // type of video being recorded
-            this.state.snippetRecorder.mimeType = 'video/webm';
-
-            this.state.snippetRecorder.start(11000);
-            console.log('recording for 10 seconds');
-
-            this.state.snippetRecorder.ondataavailable = function(blob) {
-                // POST/PUT "Blob" using FormData/XHR2
-                //let zip = new JSZip();
-                // zip.generateAsync({ type: 'blob' })
-                //     .then(function(blob) {
-                //         FileSaver.saveAs(blob, 'hello.zip');
-                //     });
-                // var d = new Date();
-                // var n = d.getTime();
-                let blobURL = URL.createObjectURL(blob);
-                video.src = blobURL;
-                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
-            };
+        };
     }
 
-
     recordCall() {
-        if (this.state.recording === false) {
-            console.log('------------------ Stopped Recording ------------------------');
-            this.state.mediaRecorder.stop();
-        } else {
-            console.log('------------------ Recording ------------------------');
-            // checks to see if recording is started
-            let stream;
-            let video = document.getElementById('largeVideo');
-
-            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-                // Do Firefox-related activities
-                stream = this.state.imgCanvas.captureStream();
-                console.log('firefox');
-            } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-                stream = video.captureStream();
-                console.log('chrome');
-            }
-
-            let mediaRecorder = new MediaStreamRecorder(stream);
-            this.state.mediaRecorder = mediaRecorder;
-
-            // type of video being recorded
-            this.state.snippetRecorder.mediaConstraints = this.state.mediaConstraints;
-            this.state.mediaRecorder.mimeType = 'video/webm';
-
-            this.state.mediaRecorder.start(61000*30);
-
-            this.state.mediaRecorder.ondataavailable = function(blob) {
-                // POST/PUT "Blob" using FormData/XHR2
-                //let zip = new JSZip();
-                // zip.generateAsync({ type: 'blob' })
-                //     .then(function(blob) {
-                //         FileSaver.saveAs(blob, 'hello.zip');
-                //     });
-                let blobURL = URL.createObjectURL(blob);
-                video.src = blobURL;
-                document.write('<a href="' + blobURL + '">' + blobURL + '</a>');
-                console.log('------------------ Video sent to Database ------------------------');
-            };
-            this.state.recording = false;
+        // checks to see if recording is started
+        if (this.state.recording === false){
+            console.log("is false");
+            this.state.recording = true;
         }
+        else if(this.state.recording === true){
+            console.log("is true");
+            return;
+        }
+
+        let stream;
+        let cID = this.state.urlParams.conferenceId;
+        let video = document.getElementById('largeVideo');
+        if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            // Do Firefox-related activities
+            stream = this.state.imgCanvas.captureStream();
+            console.log('firefox');
+        } else if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            stream = video.captureStream();
+            console.log('chrome');
+        }
+        console.log('------------------ Recording Call ------------------------');
+        let mediaRecorder = new MediaStreamRecorder(stream);
+        //this.state.snippetRecorder = mediaRecorder;
+        mediaRecorder.mediaConstraints = this.state.mediaConstraints;
+        // type of video being recorded
+        mediaRecorder.mimeType = 'video/mp4';
+        mediaRecorder.start(61000);
+
+        console.log('recording for 10 seconds');
+
+        var number = 0;
+        mediaRecorder.ondataavailable = function(blob) {
+
+            if (number === 0){
+                var videoFile;
+
+                blobToBase64(blob, function(error, base64) {
+                    if (!error) {
+                        $.ajax({
+                            url: "https://cmi.fast.sheridanc.on.ca:8080/uploadVideo",
+                            type: 'POST',
+                            data: {
+                                snippet: base64,
+                                cID: cID
+                            },
+
+                            method: 'POST',
+                            dateType: 'text',
+                            success: function(response) {
+                                console.log("success");
+                            },
+                            error: function(jqXHR, textStatus, errorMessage) {
+                                console.log(errorMessage); // Optional
+                            }
+                        });
+                        console.log('------------------ Video sent to Database ------------------------');
+
+                    }
+                });
+
+
+                number = 1;
+
+                console.log('------------------ Video sent to Database ------------------------');
+            } else {
+                mediaRecorder.stop();
+                mediaRecorder.manuallyStopped;
+            }
+        };
+
     }
 
     // todo send information to selected place
@@ -444,9 +499,9 @@ export default class LargeVideo extends Component<*> {
             let cID = this.state.conferenceID.toString();
             var xml = builder.create(cID)
                 .ele('Media')
-                    .ele('Photos', {'type': 'jpeg'}, 'URL to database link').up()
-                    .ele('Video', {'type': 'mp4'}, 'URL to database link').up()
-                    .ele('Snippet', {'type': 'mp4'}, 'URL to database link').up()
+                    .ele('Photos', {'type': 'jpeg'}, '/usr/share/pictures/' + cID).up()
+                    .ele('Video', {'type': 'mp4'}, '/usr/share/videos/' + cID ).up()
+                    .ele('Snippet', {'type': 'mp4'}, '/usr/share/snippets/' + cID).up()
                 .end({ pretty: true});
 
             //console.log(xml);
